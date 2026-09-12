@@ -56,7 +56,7 @@ for t in grey:
 wood=[t for t in m.TILE_LAYOUT if t['staggerMm']]
 ys={round(t['bounds'][3],3) for t in wood if t['bounds'][3]<2.7}
 assert any(abs(y-1.220)<.002 for y in ys) and any(abs(y-.420)<.002 for y in ys),ys
-assert len([n for n in after if n.startswith('BathCeilingLight_Diffuser')])==3
+assert len([n for n in after if n.startswith('PlanSpot_Bath_') and '_Diffuser' in n])==6
 assert len([n for n in after if n.startswith('BathMirrorLED')])==4
 assert any(n.startswith('BathApronTile') for n in after)
 assert any(n.startswith('BathInstallationTileTop') for n in after)
@@ -70,7 +70,7 @@ assert abs(cap_top-m.FINISH_SETTINGS['wet_floor']-1.203)<1e-9
 core=after['ToiletInstallationEnclosure_001']
 assert abs(core['position'][1]+core['size'][1]/2-installation_tiles[0]['bounds'][3])<1e-9
 assert after['BathroomMirror_001']['position'][0]<before['BathroomMirror_001']['position'][0]
-assert len(m.SCENE_LIGHTS)<=32
+assert len(m.SCENE_LIGHTS)<=64
 assert all(math.isfinite(v) for l in m.SCENE_LIGHTS for v in l['position']+[l['power']])
 assert len([l for l in m.SCENE_LIGHTS if l['label']=='Подсветка зеркала'])==4
-print('Passed:',len(m.TILE_LAYOUT),'final-metre tile pieces; vertical 600x1200 walls, full 600x600 floor starter at finished installation/vent corner, continuous 602 mm grid and 400 mm wood stagger; preserved shell/niche, mirror + 3 ceiling lamps;',len(m.SCENE_LIGHTS),'light samples.')
+print('Passed:',len(m.TILE_LAYOUT),'tile pieces; vertical 600x1200 walls, full 600x600 starter, 602 mm grid and 400 mm wood stagger; preserved shell/niche, mirror + 6 plan spots;',len(m.SCENE_LIGHTS),'light samples.')

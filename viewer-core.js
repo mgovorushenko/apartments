@@ -389,8 +389,8 @@
       uniform sampler2D uAmbientMap;
       uniform float uDetailAmbient;
       uniform int uLightCount;
-      uniform vec4 uLights[32];
-      uniform vec3 uLightColors[32];
+      uniform vec4 uLights[64];
+      uniform vec3 uLightColor;
       uniform int uBlockerCount;
       uniform vec4 uBlockerCenters[48];
       uniform vec3 uBlockerSizes[48];
@@ -456,14 +456,17 @@
         // Approximate inverse-square local lights; walls and door leaves block
         // direct light even in cutaway view. No IES, lux or GI claims.
         if(uEvening>.5&&uInteriorLight>.5&&uUnlit<.5&&(vSurface.x<3.5||vSurface.x>5.5)){
-          for(int i=0;i<32;i++) {
+          for(int i=0;i<64;i++) {
             if(i>=uLightCount)break;
             vec3 delta=uLights[i].xyz-p;float d2=dot(delta,delta);
+            // Cull remote/above-ceiling contributions before any wall-ray tests.
+            // Every fixture remains represented; the day branch never enters here.
+            if(d2>16.0||(uLights[i].y>2.5&&delta.y<0.0))continue;
             float lambert=max(dot(n,normalize(delta)),0.0);
             float strength=uLights[i].w/(.45+d2)*(.12+.88*lambert);
             if(strength<.009)continue;
             if(!blocked(p+n*.006,uLights[i].xyz))
-              lighting+=uLightColors[i]*strength*mix(.30,1.0,uEvening);
+              lighting+=uLightColor*strength*(1.0-smoothstep(9.0,16.0,d2))*mix(.30,1.0,uEvening);
           }
         }
         vec3 halfway=normalize(lightDirection+normalize(uEye-p));
@@ -618,7 +621,7 @@
       gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
       const eveningLocation=gl.getUniformLocation(program,'uEvening');
-      const lightLocations=Object.fromEntries(['uLightCount','uLights[0]','uLightColors[0]','uBlockerCount','uBlockerCenters[0]','uBlockerSizes[0]'].map(n=>[n,gl.getUniformLocation(program,n)]));
+      const lightLocations=Object.fromEntries(['uLightCount','uLights[0]','uLightColor','uBlockerCount','uBlockerCenters[0]','uBlockerSizes[0]'].map(n=>[n,gl.getUniformLocation(program,n)]));
       const state = { cutWalls: true, cutHeight: 1.35, furniture: true, doorsClosed: false, mode: 'furniture', evening:false, cabinetOpen:false,towelsVisible:true };
       let lastLightingKey=null;
       const camera = { yaw: 1.02, pitch: 1.02, distance: 17.5, target: [4.25, 0.58, 4.65], top: false };
@@ -777,10 +780,15 @@
         const lightingKey=localLights?`evening:${state.doorsClosed}`:'off';
         if(lightingKey!==lastLightingKey){
           if(localLights){
-            const lights=(model.lights||[]).slice(0,32);
+            const lights=model.lights||[];
+            if(lights.length>64)throw new Error('Слишком много источников света: максимум 64');
             gl.uniform1i(lightLocations.uLightCount,lights.length);
             gl.uniform4fv(lightLocations['uLights[0]'],new Float32Array(lights.flatMap(l=>[...l.position,l.power])));
-            gl.uniform3fv(lightLocations['uLightColors[0]'],new Float32Array(lights.flatMap(l=>l.color)));
+            // One shared warm-white color keeps the shader below WebGL2's
+            // minimum fragment-uniform budget even with 64 light positions.
+            const color=lights[0]?.color||[1,.94,.85];
+            if(lights.some(l=>l.color.some((v,i)=>v!==color[i])))throw new Error('Источники должны иметь общий цвет света');
+            gl.uniform3fv(lightLocations.uLightColor,new Float32Array(color));
             const blockers=model.elements.filter(e=>e.category==='wall'||e.category==='door')
               .map(e=>adjustedElement(e,{...state,cutWalls:false})).filter(Boolean).slice(0,48);
             gl.uniform1i(lightLocations.uBlockerCount,blockers.length);

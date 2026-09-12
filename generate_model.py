@@ -579,7 +579,7 @@ def scene_data():
             "title": "Квартира — замеры и планировка Лены",
             "ceilingHeight": CEILING_HEIGHT,
             "units": "м",
-            "revision": "2026-09-09-interactive-bath-cabinet",
+            "revision": "2026-09-12-lighting-plan",
             "horizontalScale": "размерные привязки + обводка схемы; см. accuracy.md",
             "finishes": FINISH_SETTINGS,
             "designerSource": "07-08 План расстановки мебели 4.pdf, листы 7–8",
@@ -589,6 +589,7 @@ def scene_data():
         "elements": ELEMENTS,
         "objects": FURNITURE_CATALOG,
         "lights": SCENE_LIGHTS,
+        "lightingReference": LIGHTING_REFERENCE,
         "cabinetMotion": CABINET_MOTION,
         "detailAmbient": json.loads(ambient_path.read_text()) if ambient_path.exists() else None,
         "bounds": {"min": [-1.36, -0.06, -.21], "max": [9.33, CEILING_HEIGHT, 9.92]},
@@ -648,6 +649,10 @@ def main() -> None:
     (output / 'bathroom-tile-layout.json').write_text(json.dumps({
         'units':'m','jointMm':2,'note':'Раскладка модели, подрезки по предварительным чистовым граням; не карта заказа или монтажа.',
         'reference':TILE_REFERENCE,'pieces':TILE_LAYOUT},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (output / 'lighting-layout.json').write_text(json.dumps({'reference':LIGHTING_REFERENCE,'fixtures':LIGHTING_LAYOUT},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    from lighting_review import write as write_lighting_review
+    import sys
+    write_lighting_review(sys.modules[__name__],output)
 
     usdzip = Path("/usr/bin/usdzip")
     if usdzip.exists():

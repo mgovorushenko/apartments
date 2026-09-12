@@ -99,7 +99,9 @@ def render(bathroom=False, evening=False, overview=False, pier=False, kitchen_ov
         enter=np.max(np.minimum(t0,t1),axis=-1);leave=np.min(np.maximum(t0,t1),axis=-1)
         blocked=np.any((leave>np.maximum(enter,.001))&(enter<.998)&(leave>.001),axis=-1)
         strength=power[None,:]/(.45+d2)*(.12+.88*lambert)
-        strength=np.where(blocked|(strength<.009),0,strength)
+        strength=np.where(blocked|(strength<.009)|(d2>16)|((lp[None,:,1]>2.5)&(delta[:,:,1]<0)),0,strength)
+        fade=np.clip((d2-9)/7,0,1)
+        strength*=1-fade*fade*(3-2*fade)
         ambient=np.broadcast_to([.065,.078,.105],points.shape) if evening else np.repeat((.66+.24*np.maximum(normals@light_direction,0))[:,None],3,axis=1)
         return ambient+strength@lc*(1 if evening else .30)
     meshes={shape:fn() for shape,fn in [('box',m.cube_geometry),('cylinder',m.cylinder_geometry),('ceiling',m.ceiling_geometry),('hexagon',m.hexagon_geometry)]}

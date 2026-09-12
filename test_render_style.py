@@ -2,6 +2,12 @@
 import copy
 import generate_model as m
 import render_style
+import scene_lighting
+
+# This test isolates styling; plan lighting depends on the styled sconces.
+def no_plan_lighting(api):
+    api.SCENE_LIGHTS=[];api.LIGHTING_LAYOUT=[];api.LIGHTING_REFERENCE={}
+scene_lighting.build=no_plan_lighting
 
 style=render_style.build
 render_style.build=lambda api:None

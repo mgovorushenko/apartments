@@ -1,0 +1,1013 @@
+{
+  "reference": {
+    "source": "Освещение.png",
+    "referenceSize": [
+      1630,
+      1536
+    ],
+    "xAnchors": [
+      [
+        63,
+        9.075
+      ],
+      [
+        344,
+        7.275
+      ],
+      [
+        366,
+        7.155
+      ],
+      [
+        558,
+        5.925
+      ],
+      [
+        583,
+        5.795
+      ],
+      [
+        620,
+        5.565
+      ],
+      [
+        750,
+        4.69
+      ],
+      [
+        1235,
+        1.599915
+      ],
+      [
+        1494,
+        0.015
+      ]
+    ],
+    "zAnchors": [
+      [
+        104,
+        8.755
+      ],
+      [
+        579,
+        5.725
+      ],
+      [
+        607,
+        5.615
+      ],
+      [
+        837,
+        4.175
+      ],
+      [
+        915,
+        3.605
+      ],
+      [
+        1058,
+        2.715
+      ],
+      [
+        1278,
+        1.335
+      ],
+      [
+        1295,
+        1.225
+      ],
+      [
+        1486,
+        0.015
+      ]
+    ],
+    "note": "40 отдельных спотов, 1 центральный светильник, 4 бра, 3 системы подсветки. Координаты по пропорциям, без размерных привязок. Размеры приборов, высоты бра, мощности/температура — предварительная визуализация, не светотехнический расчёт."
+  },
+  "fixtures": [
+    {
+      "id": "spot-kitchen-01",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        175,
+        242
+      ],
+      "position": [
+        8.35756227758007,
+        2.71,
+        7.874705263157895
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_01_Trim_001",
+        "PlanSpot_Kitchen_01_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-02",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        175,
+        274
+      ],
+      "position": [
+        8.35756227758007,
+        2.71,
+        7.670578947368422
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_02_Trim_001",
+        "PlanSpot_Kitchen_02_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-03",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        447,
+        242
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        7.874705263157895
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_03_Trim_001",
+        "PlanSpot_Kitchen_03_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-04",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        447,
+        274
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        7.670578947368422
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_04_Trim_001",
+        "PlanSpot_Kitchen_04_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-05",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        175,
+        478
+      ],
+      "position": [
+        8.35756227758007,
+        2.71,
+        6.369273684210526
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_05_Trim_001",
+        "PlanSpot_Kitchen_05_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-06",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        175,
+        510
+      ],
+      "position": [
+        8.35756227758007,
+        2.71,
+        6.165147368421053
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_06_Trim_001",
+        "PlanSpot_Kitchen_06_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-07",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        447,
+        478
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        6.369273684210526
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_07_Trim_001",
+        "PlanSpot_Kitchen_07_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-08",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        447,
+        510
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        6.165147368421053
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_08_Trim_001",
+        "PlanSpot_Kitchen_08_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-09",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        175,
+        667
+      ],
+      "position": [
+        8.35756227758007,
+        2.71,
+        5.239347826086957
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_09_Trim_001",
+        "PlanSpot_Kitchen_09_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-10",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        175,
+        698
+      ],
+      "position": [
+        8.35756227758007,
+        2.71,
+        5.045260869565217
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_10_Trim_001",
+        "PlanSpot_Kitchen_10_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-kitchen-11",
+      "kind": "spot",
+      "room": "Kitchen",
+      "sourcePixel": [
+        447,
+        698
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        5.045260869565217
+      ],
+      "elements": [
+        "PlanSpot_Kitchen_11_Trim_001",
+        "PlanSpot_Kitchen_11_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-central-01",
+      "kind": "spot",
+      "room": "Central",
+      "sourcePixel": [
+        644,
+        698
+      ],
+      "position": [
+        5.4034615384615385,
+        2.71,
+        5.045260869565217
+      ],
+      "elements": [
+        "PlanSpot_Central_01_Trim_001",
+        "PlanSpot_Central_01_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-central-02",
+      "kind": "spot",
+      "room": "Central",
+      "sourcePixel": [
+        447,
+        855
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        4.043461538461538
+      ],
+      "elements": [
+        "PlanSpot_Central_02_Trim_001",
+        "PlanSpot_Central_02_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-central-03",
+      "kind": "spot",
+      "room": "Central",
+      "sourcePixel": [
+        447,
+        887
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        3.8096153846153844
+      ],
+      "elements": [
+        "PlanSpot_Central_03_Trim_001",
+        "PlanSpot_Central_03_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-central-04",
+      "kind": "spot",
+      "room": "Central",
+      "sourcePixel": [
+        613,
+        887
+      ],
+      "position": [
+        5.608513513513514,
+        2.71,
+        3.8096153846153844
+      ],
+      "elements": [
+        "PlanSpot_Central_04_Trim_001",
+        "PlanSpot_Central_04_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-central-05",
+      "kind": "spot",
+      "room": "Central",
+      "sourcePixel": [
+        645,
+        887
+      ],
+      "position": [
+        5.3967307692307696,
+        2.71,
+        3.8096153846153844
+      ],
+      "elements": [
+        "PlanSpot_Central_05_Trim_001",
+        "PlanSpot_Central_05_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-entry-01",
+      "kind": "spot",
+      "room": "Entry",
+      "sourcePixel": [
+        447,
+        1045
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        2.795909090909091
+      ],
+      "elements": [
+        "PlanSpot_Entry_01_Trim_001",
+        "PlanSpot_Entry_01_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-entry-02",
+      "kind": "spot",
+      "room": "Entry",
+      "sourcePixel": [
+        447,
+        1201
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        1.818
+      ],
+      "elements": [
+        "PlanSpot_Entry_02_Trim_001",
+        "PlanSpot_Entry_02_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-entry-03",
+      "kind": "spot",
+      "room": "Entry",
+      "sourcePixel": [
+        447,
+        1233
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        1.6172727272727272
+      ],
+      "elements": [
+        "PlanSpot_Entry_03_Trim_001",
+        "PlanSpot_Entry_03_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-entry-04",
+      "kind": "spot",
+      "room": "Entry",
+      "sourcePixel": [
+        447,
+        1389
+      ],
+      "position": [
+        6.63609375,
+        2.71,
+        0.6295026178010471
+      ],
+      "elements": [
+        "PlanSpot_Entry_04_Trim_001",
+        "PlanSpot_Entry_04_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-laundry-01",
+      "kind": "spot",
+      "room": "Laundry",
+      "sourcePixel": [
+        259,
+        1389
+      ],
+      "position": [
+        7.819483985765125,
+        2.71,
+        0.6295026178010471
+      ],
+      "elements": [
+        "PlanSpot_Laundry_01_Trim_001",
+        "PlanSpot_Laundry_01_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-laundry-02",
+      "kind": "spot",
+      "room": "Laundry",
+      "sourcePixel": [
+        290,
+        1389
+      ],
+      "position": [
+        7.620907473309609,
+        2.71,
+        0.6295026178010471
+      ],
+      "elements": [
+        "PlanSpot_Laundry_02_Trim_001",
+        "PlanSpot_Laundry_02_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-01",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        945,
+        680
+      ],
+      "position": [
+        3.4475946907216497,
+        2.71,
+        5.1579565217391306
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_01_Trim_001",
+        "PlanSpot_Bedroom_01_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-02",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        1155,
+        680
+      ],
+      "position": [
+        2.1096197422680416,
+        2.71,
+        5.1579565217391306
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_02_Trim_001",
+        "PlanSpot_Bedroom_02_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-03",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        1187,
+        680
+      ],
+      "position": [
+        1.9057378453608247,
+        2.71,
+        5.1579565217391306
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_03_Trim_001",
+        "PlanSpot_Bedroom_03_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-04",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        1396,
+        680
+      ],
+      "position": [
+        0.6146975675675674,
+        2.71,
+        5.1579565217391306
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_04_Trim_001",
+        "PlanSpot_Bedroom_04_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-05",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        945,
+        830
+      ],
+      "position": [
+        3.4475946907216497,
+        2.71,
+        4.218826086956522
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_05_Trim_001",
+        "PlanSpot_Bedroom_05_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-06",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        1396,
+        830
+      ],
+      "position": [
+        0.6146975675675674,
+        2.71,
+        4.218826086956522
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_06_Trim_001",
+        "PlanSpot_Bedroom_06_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-07",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        945,
+        980
+      ],
+      "position": [
+        3.4475946907216497,
+        2.71,
+        3.200454545454545
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_07_Trim_001",
+        "PlanSpot_Bedroom_07_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bedroom-08",
+      "kind": "spot",
+      "room": "Bedroom",
+      "sourcePixel": [
+        1396,
+        980
+      ],
+      "position": [
+        0.6146975675675674,
+        2.71,
+        3.200454545454545
+      ],
+      "elements": [
+        "PlanSpot_Bedroom_08_Trim_001",
+        "PlanSpot_Bedroom_08_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-study-01",
+      "kind": "spot",
+      "room": "Study",
+      "sourcePixel": [
+        1098,
+        183
+      ],
+      "position": [
+        2.4727843711340207,
+        2.71,
+        8.251063157894738
+      ],
+      "elements": [
+        "PlanSpot_Study_01_Trim_001",
+        "PlanSpot_Study_01_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-study-02",
+      "kind": "spot",
+      "room": "Study",
+      "sourcePixel": [
+        1130,
+        183
+      ],
+      "position": [
+        2.2689024742268042,
+        2.71,
+        8.251063157894738
+      ],
+      "elements": [
+        "PlanSpot_Study_02_Trim_001",
+        "PlanSpot_Study_02_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-study-03",
+      "kind": "spot",
+      "room": "Study",
+      "sourcePixel": [
+        659,
+        293
+      ],
+      "position": [
+        5.3025,
+        2.71,
+        7.549378947368421
+      ],
+      "elements": [
+        "PlanSpot_Study_03_Trim_001",
+        "PlanSpot_Study_03_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-study-04",
+      "kind": "spot",
+      "room": "Study",
+      "sourcePixel": [
+        659,
+        325
+      ],
+      "position": [
+        5.3025,
+        2.71,
+        7.345252631578948
+      ],
+      "elements": [
+        "PlanSpot_Study_04_Trim_001",
+        "PlanSpot_Study_04_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bath-01",
+      "kind": "spot",
+      "room": "Bath",
+      "sourcePixel": [
+        154,
+        977
+      ],
+      "position": [
+        8.492081850533808,
+        2.71,
+        3.219125874125874
+      ],
+      "elements": [
+        "PlanSpot_Bath_01_Trim_001",
+        "PlanSpot_Bath_01_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bath-02",
+      "kind": "spot",
+      "room": "Bath",
+      "sourcePixel": [
+        285,
+        977
+      ],
+      "position": [
+        7.652935943060498,
+        2.71,
+        3.219125874125874
+      ],
+      "elements": [
+        "PlanSpot_Bath_02_Trim_001",
+        "PlanSpot_Bath_02_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bath-03",
+      "kind": "spot",
+      "room": "Bath",
+      "sourcePixel": [
+        154,
+        1095
+      ],
+      "position": [
+        8.492081850533808,
+        2.71,
+        2.4829090909090907
+      ],
+      "elements": [
+        "PlanSpot_Bath_03_Trim_001",
+        "PlanSpot_Bath_03_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bath-04",
+      "kind": "spot",
+      "room": "Bath",
+      "sourcePixel": [
+        285,
+        1095
+      ],
+      "position": [
+        7.652935943060498,
+        2.71,
+        2.4829090909090907
+      ],
+      "elements": [
+        "PlanSpot_Bath_04_Trim_001",
+        "PlanSpot_Bath_04_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bath-05",
+      "kind": "spot",
+      "room": "Bath",
+      "sourcePixel": [
+        205,
+        1217
+      ],
+      "position": [
+        8.165391459074733,
+        2.71,
+        1.7176363636363634
+      ],
+      "elements": [
+        "PlanSpot_Bath_05_Trim_001",
+        "PlanSpot_Bath_05_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "spot-bath-06",
+      "kind": "spot",
+      "room": "Bath",
+      "sourcePixel": [
+        237,
+        1217
+      ],
+      "position": [
+        7.960409252669039,
+        2.71,
+        1.7176363636363634
+      ],
+      "elements": [
+        "PlanSpot_Bath_06_Trim_001",
+        "PlanSpot_Bath_06_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "study-central",
+      "kind": "central",
+      "room": "Study",
+      "sourcePixel": [
+        909,
+        343
+      ],
+      "position": [
+        3.6769618247422686,
+        2.65,
+        7.2304315789473685
+      ],
+      "elements": [
+        "PlanCentral_Study_Trim_001",
+        "PlanCentral_Study_Diffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "sconce-kitchen",
+      "kind": "sconce",
+      "room": "Kitchen",
+      "sourcePixel": [
+        554,
+        414
+      ],
+      "position": [
+        6.185,
+        1.51,
+        6.777526315789474
+      ],
+      "elements": [
+        "KitchenSconce_Plate_001",
+        "KitchenSconce_Arm_001",
+        "KitchenSconce_Shade_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "sconce-bedsideleft",
+      "kind": "sconce",
+      "room": "Bedroom",
+      "sourcePixel": [
+        1370,
+        1054
+      ],
+      "position": [
+        0.7738010038610038,
+        1.397,
+        2.916656626506024
+      ],
+      "elements": [
+        "BedsideLeft_LightBackplate_001",
+        "BedsideLeft_LightArm_001",
+        "BedsideLeft_LightShade_001",
+        "BedsideLeft_LightRim_001",
+        "BedsideLeft_LightDiffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "sconce-bedsideright",
+      "kind": "sconce",
+      "room": "Bedroom",
+      "sourcePixel": [
+        972,
+        1054
+      ],
+      "position": [
+        3.275569340206186,
+        1.397,
+        2.916656626506024
+      ],
+      "elements": [
+        "BedsideRight_LightBackplate_001",
+        "BedsideRight_LightArm_001",
+        "BedsideRight_LightShade_001",
+        "BedsideRight_LightRim_001",
+        "BedsideRight_LightDiffuser_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "sconce-study",
+      "kind": "sconce",
+      "room": "Study",
+      "sourcePixel": [
+        1048,
+        578
+      ],
+      "position": [
+        2.7913498350515464,
+        1.6,
+        5.984999999999999
+      ],
+      "elements": [
+        "StudySconce_Plate_001",
+        "StudySconce_Arm_001",
+        "StudySconce_Shade_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "bath-mirror-led",
+      "kind": "backlight",
+      "room": "Bath",
+      "sourcePixel": [
+        70,
+        1095
+      ],
+      "position": [
+        9.052054945054943,
+        1.471,
+        2.4789402173913047
+      ],
+      "elements": [
+        "BathMirrorLED_001",
+        "BathMirrorLED_002",
+        "BathMirrorLED_003",
+        "BathMirrorLED_004"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "entry-mirror-led",
+      "kind": "backlight",
+      "room": "Entry",
+      "sourcePixel": [
+        267,
+        1302
+      ],
+      "position": [
+        7.768238434163701,
+        1.5,
+        1.207
+      ],
+      "elements": [
+        "EntryMirror_Glass_001",
+        "EntryMirror_LED_001",
+        "EntryMirror_LED_002",
+        "EntryMirror_LED_003",
+        "EntryMirror_LED_004"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    },
+    {
+      "id": "kitchen-led",
+      "kind": "backlight",
+      "room": "Kitchen",
+      "sourcePixel": [
+        90,
+        729
+      ],
+      "position": [
+        8.746,
+        1.509,
+        5.6
+      ],
+      "elements": [
+        "KitchenLED_Long_001",
+        "KitchenLED_Return_001"
+      ],
+      "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 """Approved kitchen composition: three chairs, lower opal sconce, art and TV."""
 import generate_model as m
+from lighting_plan import position,SCONCES
 
 m.build_scene()
 items=[m.resolved(e) for e in m.ELEMENTS]
@@ -16,7 +17,7 @@ console=max(edge(e,1,1) for e in items if e['name'].startswith('TVConsole'))
 assert .17<edge(tv,1,-1)-console<.20
 assert edge(ac,1,-1)-edge(tv,1,1)>.6
 shade=node('KitchenSconce_Shade');table=node('Furniture_DiningTable_top')
-near(shade['position'][1],1.51);near(shade['position'][2],table['position'][2])
+near(shade['position'][1],1.51);near(shade['position'][2],position(SCONCES['Kitchen'])[1])
 assert shade['material']=='kitchen_opal' and shade['detail']['type']=='pillow'
 light=next(l for l in m.SCENE_LIGHTS if l['label']=='Бра у стола')
 near(light['position'][1],shade['position'][1])

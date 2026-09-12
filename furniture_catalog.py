@@ -11,6 +11,9 @@ SOURCE = '07-08 План расстановки мебели 4.pdf · лист 8
 def build(api):
     # Longest/specific prefixes first; accessories share their parent's selection.
     specs=[
+        ('study-central','Центральный светильник кабинета',('PlanCentral_',),0,None),
+        ('study-sconce','Бра кабинета',('StudySconce_',),0,None),
+        ('entry-mirror','Зеркало с подсветкой в прихожей',('EntryMirror_',),0,None),
         ('bath-lighting','Общий свет ванной',('BathCeilingLight',),0,None),
         ('room-lighting','Общий свет спальни и кабинета',('RoomCeilingLight',),0,None),
         ('bath-apron','Облицованный экран ванны',('BathApron',),0,None),
@@ -84,6 +87,10 @@ def build(api):
         specs.append((prefix,label,(prefix,),0,None))
     for side in ('Headboard','SouthLeft','SouthRight'):
         specs.append(('art-'+side,'Картина в спальне',('BedroomArt'+side,),0,None))
+    room_labels={'Kitchen':'кухня','Central':'центральная зона','Entry':'прихожая','Laundry':'постирочная','Bedroom':'спальня','Study':'кабинет','Bath':'ванная'}
+    rows=getattr(api,'LIGHTING_LAYOUT',[])
+    specs=[(r['id'],'Спот · '+room_labels[r['room']]+' · '+r['id'].split('-')[-1],tuple(r['elements']),0,None)
+           for r in rows if r['kind']=='spot']+specs
     catalog=[]
     for ident,label,prefixes,angle,pdf in specs:
         members=[e for e in api.ELEMENTS if e['category']=='furniture' and not e.get('inspectId') and e['name'].startswith(prefixes)]
@@ -117,6 +124,9 @@ def build(api):
                             note='Ш × Г — корпус; В — габарит модели, в PDF не задана.'))
     api.FURNITURE_CATALOG=catalog
     for item in catalog:
+        if item['id'].startswith('spot-'):
+            row=next(r for r in rows if r['id']==item['id']);x,y,z=row['position']
+            item['note']=f'По пропорциям плана освещения. Центр X={x:.3f} м, Z={z:.3f} м. Диаметр и высота прибора предварительные; это не размерная привязка для монтажа.'
         if item['id'] in ('bedroom-wardrobe','hall-wardrobe','entry-wardrobe'):
             item['note']='Два раздвижных фасада на параллельных направляющих; перехлёст 35 мм. Корпус сохранён. Профиль и система купе предварительные, движение створок не анимировано.'
         if item['id'].startswith('outdoor-'):

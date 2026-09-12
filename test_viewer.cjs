@@ -226,8 +226,10 @@ function test(width,dark){
   assert.equal(nodes['[data-action="evening"]'].attrs['aria-pressed'],'true');
   assert.deepEqual(matrices.at(-1),dayMatrix,'evening preserves camera');
   assert.equal(uploads.length,dayUploads,'evening changes lighting, not apartment meshes');
-  assert(uniforms.uLightCount>15&&uniforms.uLightCount<=32);
+  assert(uniforms.uLightCount>40&&uniforms.uLightCount<=64);
+  assert.equal(uniforms.uLightCount,win.APARTMENT_SCENE.lights.length,'no plan lights silently dropped');
   assert.equal(uniforms['uLights[0]'].length,uniforms.uLightCount*4);
+  assert.deepEqual(uniforms.uLightColor,Array.from(new Float32Array(win.APARTMENT_SCENE.lights[0].color)));
   assert(uniforms.uBlockerCount>=37&&uniforms.uBlockerCount<=48);
   assert(shaders.some(s=>s.includes('bool blocked')&&s.includes('uEvening')));
   click('bathroom');eyeFromMatrix(matrices.at(-1)).forEach((v,i)=>assert(Math.abs(v-[8.80,1.50,2.80][i])<1e-4));
