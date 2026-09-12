@@ -4,7 +4,7 @@ const dataCode=fs.readFileSync(path.join(__dirname,'scene-data.js'),'utf8');
 const code=fs.readFileSync(path.join(__dirname,'viewer-core.js'),'utf8');
 function test(width,dark){
   const callbacks=[],nodes={},draws=[],matrices=[],uploads=[],uniforms={},shaders=[];
-  let lightArrayUploads=0,textureUploads=0;
+  let lightArrayUploads=0,textureUploads=0,volumeUploads=0;
   function element(){return {style:{},dataset:{},listeners:{},textContent:'',attrs:{},
     addEventListener(n,f){this.listeners[n]=f},setAttribute(n,v){this.attrs[n]=v},
     appendChild(){},remove(){},focus(){},setPointerCapture(){},getBoundingClientRect(){return {left:0,top:0,width,height:Math.min(600,Math.max(320,width*.68))}}};}
@@ -12,6 +12,7 @@ function test(width,dark){
   for(const s of ['.apt-layer-values','.apt-inspection','[data-action="object"]'])nodes[s]=element();
   nodes['[data-action="kitchen"]']=element();
   nodes['[data-action="bathroom"]']=element();nodes['[data-action="evening"]']=element();
+  for(const s of ['[data-action="upper-light"]','[data-action="small-light"]','.apt-light-controls'])nodes[s]=element();
   nodes['[data-action="cabinet"]']=element();
   nodes['[data-action="towels"]']=element();nodes['[data-action="towels-label"]']=element();
   const root=element();root.querySelector=s=>{assert(nodes[s],s);return nodes[s]};
@@ -19,6 +20,7 @@ function test(width,dark){
   const gl=new Proxy({
     getShaderParameter:()=>true,getProgramParameter:()=>true,
     texImage2D:(_t,_l,_f,w,h,_b,_format,_type,pixels)=>{textureUploads++;assert.equal(pixels.length,w*h)},
+    texImage3D:(_t,_l,_f,w,h,d,_b,_format,_type,pixels)=>{assert.equal(pixels.length,w*h*d*3);if(w>1)volumeUploads++},
     shaderSource:(_,s)=>shaders.push(s),getUniformLocation:(_,s)=>s,
     uniform1f:(key,v)=>uniforms[key]=v,uniform1i:(key,v)=>uniforms[key]=v,
     uniform3fv:(key,v)=>{assert([...v].every(Number.isFinite));uniforms[key]=[...v];if(key.includes('[0]'))lightArrayUploads++},
@@ -133,7 +135,7 @@ function test(width,dark){
   const arrowUploads=uploads.length;
   const close=(a,b)=>assert(Math.abs(a-b)<1e-4,`${a} != ${b}`);
   const yaw=m=>Math.atan2(-m[11],-m[3]);
-  for(const [code,sign] of [['ArrowUp',1],['ArrowDown',-1]]) {
+  for(const [code,sign] of [['Space',1],['ShiftLeft',-1],['ShiftRight',-1]]) {
     const prior=matrices.at(-1),eye=eyeFromMatrix(prior);
     let prevented=false;key(code,{preventDefault(){prevented=true}});assert(prevented,'arrow must suppress page scroll');
     tick(2000);tick(2050);release(code);flush();
@@ -141,6 +143,12 @@ function test(width,dark){
     close(after[0],eye[0]);close(after[2],eye[2]);
     close(after[1]-eye[1],sign*1.8*(1/60+.05));
     for(const i of [0,1,2,3,4,5,6,7,8,9,10,11])close(matrices.at(-1)[i],prior[i]);
+  }
+  for(const code of ['ArrowUp','ArrowDown']){
+    const prior=matrices.at(-1),eye=eyeFromMatrix(prior);
+    key(code);tick(2060);release(code);flush();
+    eyeFromMatrix(matrices.at(-1)).forEach((v,i)=>close(v,eye[i]));
+    assert.notDeepEqual(matrices.at(-1),prior,'vertical arrows change gaze only');
   }
   for(const [code,sign] of [['ArrowLeft',-1],['ArrowRight',1]]) {
     const prior=matrices.at(-1),eye=eyeFromMatrix(prior);
@@ -154,7 +162,7 @@ function test(width,dark){
   for(const code of ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'])release(code);
   flush();assert.deepEqual(matrices.at(-1),cancelled,'opposite arrows cancel');
   const concurrent=eyeFromMatrix(matrices.at(-1)),priorYaw=yaw(matrices.at(-1));
-  key('KeyW');key('ArrowUp');key('ArrowRight');
+  key('KeyW');key('Space');key('ArrowRight');
   nodes.canvas.listeners.pointerdown(event);
   nodes.canvas.listeners.pointermove({...event,clientX:120,clientY:100});tick(2300);
   nodes.canvas.listeners.pointerup(event);tick(2350);
@@ -162,7 +170,7 @@ function test(width,dark){
   assert(afterConcurrent[1]>concurrent[1]);
   assert(Math.hypot(afterConcurrent[0]-concurrent[0],afterConcurrent[2]-concurrent[2])>.05);
   assert(yaw(matrices.at(-1))>priorYaw+.16,'mouse and arrow rotations accumulate');
-  for(const code of ['KeyW','ArrowUp','ArrowRight'])release(code);
+  for(const code of ['KeyW','Space','ArrowRight'])release(code);
   flush();assert.equal(callbacks.length,0);
   assert.equal(uploads.length,arrowUploads,'arrows must not change apartment geometry');
   key('ArrowUp');tick(2400);win.listeners.blur();flush();assert.equal(callbacks.length,0);
@@ -220,28 +228,33 @@ function test(width,dark){
   const dayMatrix=matrices.at(-1),dayUploads=uploads.length;
   assert.equal(uniforms.uEvening,0);
   assert.equal(uniforms.uDetailAmbient,1);
-  assert.equal(uniforms.uInteriorLight,0);assert.equal(uniforms.uLightCount,0);assert.equal(uniforms.uBlockerCount,0);
+  assert.equal(uniforms.uInteriorLight,0);assert.equal(uniforms.uUpperLight,0);assert.equal(uniforms.uSmallLight,0);
+  assert.equal(volumeUploads,0,'day never loads full lighting volumes');
   assert.equal(lightArrayUploads,0,'day mode never builds/uploads local-light or shadow arrays');
   click('evening');assert.equal(uniforms.uEvening,1);
   assert.equal(nodes['[data-action="evening"]'].attrs['aria-pressed'],'true');
   assert.deepEqual(matrices.at(-1),dayMatrix,'evening preserves camera');
   assert.equal(uploads.length,dayUploads,'evening changes lighting, not apartment meshes');
-  assert(uniforms.uLightCount>40&&uniforms.uLightCount<=64);
-  assert.equal(uniforms.uLightCount,win.APARTMENT_SCENE.lights.length,'no plan lights silently dropped');
-  assert.equal(uniforms['uLights[0]'].length,uniforms.uLightCount*4);
-  assert.deepEqual(uniforms.uLightColor,Array.from(new Float32Array(win.APARTMENT_SCENE.lights[0].color)));
-  assert(uniforms.uBlockerCount>=37&&uniforms.uBlockerCount<=48);
-  assert(shaders.some(s=>s.includes('bool blocked')&&s.includes('uEvening')));
+  assert.equal(volumeUploads,8,'two circuits, two directions, two door states, uploaded once');
+  assert.equal(uniforms.uUpperLight,1);assert.equal(uniforms.uSmallLight,1);
+  const stableUploads=uploads.length;
+  click('upper-light');assert.equal(uniforms.uUpperLight,0);assert.equal(uniforms.uSmallLight,1);
+  click('small-light');assert.equal(uniforms.uUpperLight,0);assert.equal(uniforms.uSmallLight,0);
+  click('upper-light');assert.equal(uniforms.uUpperLight,1);assert.equal(uniforms.uSmallLight,0);
+  click('small-light');assert.equal(uniforms.uSmallLight,1);
+  assert.equal(uploads.length,stableUploads,'light circuits never rebuild geometry');
+  assert(!shaders.some(s=>s.includes('bool blocked')||s.includes('uLights[')),'no per-pixel ray tracing');
+  assert(shaders.some(s=>s.includes('bakedLight')&&s.includes('sampler3D')));
   click('bathroom');eyeFromMatrix(matrices.at(-1)).forEach((v,i)=>assert(Math.abs(v-[8.80,1.50,2.80][i])<1e-4));
   assert.equal(uniforms.uEvening,1,'bathroom preset preserves evening');
   const eveningUploads=lightArrayUploads;
   click('reset');assert.equal(lightArrayUploads,eveningUploads,'camera-only changes reuse light uniforms');
-  click('doors');assert(lightArrayUploads>eveningUploads,'door changes update shadow geometry');
+  click('doors');assert.equal(volumeUploads,8,'door change reuses precomputed textures');
   click('rough');assert.equal(uniforms.uInteriorLight,0);assert.equal(uniforms.uEvening,1);assert.equal(uniforms.uDetailAmbient,0);
   click('finished');assert.equal(uniforms.uInteriorLight,0);assert.equal(uniforms.uDetailAmbient,0);
   click('furniture');assert.equal(uniforms.uInteriorLight,1);
   click('evening');assert.equal(uniforms.uEvening,0);
-  assert.equal(uniforms.uInteriorLight,0);assert.equal(uniforms.uLightCount,0);assert.equal(uniforms.uBlockerCount,0);
+  assert.equal(uniforms.uInteriorLight,0);assert.equal(uniforms.uUpperLight,0);assert.equal(uniforms.uSmallLight,0);
   const disabledUploads=lightArrayUploads;click('bathroom');click('reset');
   assert.equal(lightArrayUploads,disabledUploads,'day navigation keeps expensive lighting disabled');
   assert.equal(textureUploads,1,'camera, selection, modes, doors and evening reuse baked texture');

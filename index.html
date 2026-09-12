@@ -3,94 +3,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
-  <title>3D-модель квартиры по планировке</title>
-  <style>
-    :root {
-      color-scheme: light dark;
-      --background: light-dark(#f4f1eb, #171817);
-      --foreground: light-dark(#262724, #ecece7);
-      --muted-foreground: light-dark(#696b65, #aaaDA7);
-      --border: light-dark(#d1cec5, #454742);
-      --primary: light-dark(#292b28, #eeeeea);
-      --primary-foreground: light-dark(#ffffff, #191a18);
-      --ring: light-dark(#676b64, #aaaDA7);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-width: 320px;
-      background: var(--background);
-      color: var(--foreground);
-      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    main {
-      width: min(1200px, 100%);
-      margin: 0 auto;
-      padding: 18px;
-    }
-    h1 { margin: 0 0 12px; font-size: clamp(20px, 3vw, 30px); font-weight: 500; }
-    .viz-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-    .btn {
-      min-height: 44px;
-      padding: 9px 11px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: transparent;
-      color: var(--foreground);
-      font: inherit;
-      cursor: pointer;
-    }
-    .btn[aria-pressed="true"] { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
-    .btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
-    .text-small { font-size: 13px; }
-    .text-muted { color: var(--muted-foreground); }
-    .text-destructive { color: #b64335; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    .downloads { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
-    .downloads a { color: var(--foreground); text-underline-offset: 3px; }
-  </style>
-  <link rel="stylesheet" href="viewer.css">
+  <meta name="color-scheme" content="dark">
+  <title>Сертолово · квартира</title>
+  <link rel="stylesheet" href="viewer.css?v=20260912b">
 </head>
 <body>
-  <main>
-    <h1>Квартира — замеры и планировка Лены</h1>
-    <div id="apartment-3d-root">
-      <div class="viz-controls apt-toolbar" aria-label="Управление моделью">
-        <button type="button" class="btn" data-action="walls" aria-pressed="false">Стены: срез 1,35 м</button>
+<main>
+  <header class="page-header"><div><span class="eyebrow">ИНТЕРАКТИВНЫЙ ПРОЕКТ</span><h1>Сертолово <span>/ Квартира</span></h1></div><a href="lighting-comparison.html" class="header-link">План освещения ↗</a></header>
+  <div id="apartment-3d-root">
+    <div class="apt-toolbar" aria-label="Управление моделью">
+      <div class="control-group" aria-label="Этап отделки">
         <button type="button" class="btn" data-action="rough" aria-pressed="false">Черновой</button>
         <button type="button" class="btn" data-action="finished" aria-pressed="false">Чистовой</button>
         <button type="button" class="btn" data-action="furniture" aria-pressed="true">Мебель</button>
-        <button type="button" class="btn" data-action="reset">Сбросить вид</button>
-        <button type="button" class="btn" data-action="top" aria-pressed="false">Вид сверху</button>
+      </div>
+      <div class="control-group" aria-label="Ракурс">
+        <button type="button" class="btn" data-action="reset">Общий вид</button>
+        <button type="button" class="btn" data-action="top" aria-pressed="false">Сверху</button>
         <button type="button" class="btn" data-action="kitchen">Кухня</button>
         <button type="button" class="btn" data-action="bathroom">Ванная</button>
-        <button type="button" class="btn" data-action="evening" aria-pressed="false">Вечер</button>
+      </div>
+      <div class="control-group">
+        <button type="button" class="btn" data-action="walls" aria-pressed="false">Срез стен</button>
         <button type="button" class="btn" data-action="doors" aria-pressed="false">Закрыть двери</button>
-        <span class="text-small text-muted apt-meta">PDF дизайнера · толщины стен и высоты предварительные</span>
       </div>
-      <div class="apt-buildup text-small" aria-label="Высота после отделки"></div>
-      <details class="text-small"><summary>Слои отделки · предварительные значения</summary><div class="apt-layer-values"></div></details>
-      <div class="viz-controls"><label class="form-label">Предмет <select class="form-select" data-action="object"><option value="">Выберите или нажмите в модели</option></select></label><button type="button" class="btn" data-action="cabinet" aria-pressed="false" hidden>Открыть пенал</button></div>
-      <div class="apt-inspection text-small" role="status">Нажмите на предмет, чтобы увидеть размеры.</div>
-      <label class="form-check" data-action="towels-label" hidden><input class="form-check-input" type="checkbox" data-action="towels" checked><span class="form-check-label">Полотенца на сушителе</span></label>
-      <div class="apt-stage">
-        <canvas role="img" aria-label="Вращаемая трехмерная модель квартиры по плану"></canvas>
-        <div class="apt-hint text-small">Мышь — поворот взгляда · WASD — движение · ↑/↓ — высота · ←/→ — поворот · колесо — вперёд/назад · Shift + мышь — сдвиг</div>
+      <button type="button" class="btn evening-button" data-action="evening" aria-pressed="false">Вечер</button>
+      <div class="control-group apt-light-controls" hidden aria-label="Сценарий освещения">
+        <button type="button" class="btn" data-action="upper-light" aria-pressed="true">Верхний свет</button>
+        <button type="button" class="btn" data-action="small-light" aria-pressed="true">Малый свет</button>
       </div>
-      <div class="apt-error text-destructive" role="alert"></div>
-      <div class="sr-only" aria-live="polite"></div>
     </div>
-    <nav class="downloads text-small" aria-label="Файлы модели">
-      <a href="apartment-model.glb" download>Скачать GLB</a>
-      <a href="apartment-model.usdz" download>Скачать USDZ для macOS</a>
-      <a href="comparison.html">Сверить с исходными схемами</a>
-      <a href="lighting-comparison.html">Сверить освещение</a>
-      <a href="accuracy.md">Точность и открытые размеры</a>
-    </nav>
-  </main>
-  <script src="scene-data.js"></script>
-  <script src="viewer-core.js"></script>
-  <script>ApartmentViewer.mount("apartment-3d-root", window.APARTMENT_SCENE);</script>
+    <div class="apt-stage">
+      <canvas role="img" aria-label="Интерактивная трёхмерная модель квартиры"></canvas>
+      <div class="apt-hint">Мышь — взгляд · WASD — движение · Space / Shift — вверх / вниз · ↑ ↓ — наклон взгляда · ← → — поворот · ПКМ — сдвиг</div>
+    </div>
+    <div class="apt-error" role="alert"></div>
+    <div class="apt-inspector">
+      <label class="object-label">Объект <select data-action="object"><option value="">Выберите в модели</option></select></label>
+      <button type="button" class="btn" data-action="cabinet" aria-pressed="false" hidden>Открыть пенал</button>
+      <label data-action="towels-label" hidden><input type="checkbox" data-action="towels" checked> Полотенца</label>
+      <div class="apt-inspection" role="status">Нажмите на предмет, чтобы увидеть размеры.</div>
+    </div>
+    <details class="technical"><summary>Параметры модели и слои отделки</summary><div class="apt-buildup"></div><div class="apt-layer-values"></div></details>
+    <div class="sr-only" aria-live="polite"></div>
+  </div>
+  <footer><span>Размеры отделки и световые характеристики предварительные</span><nav aria-label="Файлы проекта"><a href="apartment-model.glb" download>GLB ↓</a><a href="apartment-model.usdz" download>USDZ ↓</a><a href="comparison.html">Сверка плана</a><a href="accuracy.md">Точность модели</a></nav></footer>
+</main>
+<script src="scene-data.js?v=20260912b"></script>
+<script src="viewer-core.js?v=20260912b"></script>
+<script>ApartmentViewer.mount("apartment-3d-root",window.APARTMENT_SCENE);</script>
 </body>
 </html>

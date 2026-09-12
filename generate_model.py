@@ -269,6 +269,8 @@ def build_scene() -> None:
     build_apartment_detail(sys.modules[__name__])
     from cabinet_motion import build as build_cabinet_motion
     build_cabinet_motion(sys.modules[__name__])
+    from viewer_refinement import build as build_viewer_refinement
+    build_viewer_refinement(sys.modules[__name__])
     for e in ELEMENTS:e.pop('inspectId',None)
     build_catalog(sys.modules[__name__])
 
@@ -576,10 +578,10 @@ def scene_data():
     ambient_path=Path(__file__).resolve().parent/'kitchen-ambient.json'
     return {
         "metadata": {
-            "title": "Квартира — замеры и планировка Лены",
+            "title": "Сертолово · квартира",
             "ceilingHeight": CEILING_HEIGHT,
             "units": "м",
-            "revision": "2026-09-12-lighting-plan",
+            "revision": "2026-09-12-baked-lighting",
             "horizontalScale": "размерные привязки + обводка схемы; см. accuracy.md",
             "finishes": FINISH_SETTINGS,
             "designerSource": "07-08 План расстановки мебели 4.pdf, листы 7–8",
@@ -590,6 +592,7 @@ def scene_data():
         "objects": FURNITURE_CATALOG,
         "lights": SCENE_LIGHTS,
         "lightingReference": LIGHTING_REFERENCE,
+        "lightBake": json.loads((Path(__file__).resolve().parent/'lighting-bake.json').read_text()) if (Path(__file__).resolve().parent/'lighting-bake.json').exists() else None,
         "cabinetMotion": CABINET_MOTION,
         "detailAmbient": json.loads(ambient_path.read_text()) if ambient_path.exists() else None,
         "bounds": {"min": [-1.36, -0.06, -.21], "max": [9.33, CEILING_HEIGHT, 9.92]},
@@ -639,6 +642,9 @@ def main() -> None:
     output.mkdir(parents=True, exist_ok=True)
 
     build_scene()
+    from bake_lighting import ensure as ensure_lighting_bake
+    import sys
+    ensure_lighting_bake(sys.modules[__name__],Path(__file__).resolve().parent/'lighting-bake.json')
     glb_path = output / "apartment-model.glb"
     usda_path = output / "apartment-model.usda"
     usdz_path = output / "apartment-model.usdz"

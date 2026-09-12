@@ -18,7 +18,7 @@ wall=edges(node('FinishBeige_KitchenWest_'),0)[1]
 near(edges(table,0)[0]-wall,.30)
 for i in (1,3,4):
     seat=node(f'Furniture_DiningChair{i}_seat_')
-    near(math.hypot(*(seat['position'][a]-table['position'][a] for a in (0,2))),math.sqrt(2)*.40)
+    near(math.hypot(*(seat['position'][a]-table['position'][a] for a in (0,2))),.49)
     # Rotated chair geometry stays on the room side of the west partition.
     for e in items:
         if e.get('inspectId')!=f'chair-{i}':continue

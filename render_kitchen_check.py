@@ -71,15 +71,6 @@ def render(bathroom=False, evening=False, overview=False, pier=False, kitchen_ov
         x1=np.minimum(x+1,128*col+resolution-1);y1=np.minimum(y+1,128*row+resolution-1)
         values=(atlas[y,x]*(1-f[...,0])+atlas[y,x1]*f[...,0])*(1-f[...,1])+(atlas[y1,x]*(1-f[...,0])+atlas[y1,x1]*f[...,0])*f[...,1]
         return np.where(inside,values,1)
-    lights=m.SCENE_LIGHTS; lp=np.array([l['position'] for l in lights]);lc=np.array([l['color'] for l in lights]);power=np.array([l['power'] for l in lights])
-    blockers=[]
-    for raw in m.ELEMENTS:
-        e=m.resolved(raw)
-        if e['category'] not in ('wall','door'):continue
-        if e['category']=='door':e={**e,**e['closed']}
-        blockers.append(e)
-    bc=np.array([b['position'] for b in blockers]);bs=np.array([b['size'] for b in blockers])/2
-    ba=np.array([b.get('rotation',0) for b in blockers]);co=np.cos(ba);si=np.sin(ba)
     light_direction=np.array([-.35,.70,.72]);light_direction/=np.linalg.norm(light_direction)
     def illumination(points,normals):
         # Vertex-sampled counterpart of the live fragment shader, for offline QA.
@@ -87,23 +78,11 @@ def render(bathroom=False, evening=False, overview=False, pier=False, kitchen_ov
             kitchen=(points[:,0]>-.55)&(points[:,0]<9.09)&(points[:,2]>-.05)&(points[:,2]<8.79)
             diffuse=np.maximum(normals@light_direction,0)
             return np.repeat(np.where(kitchen,.67+.13*normals[:,1]+.15*diffuse,.66+.24*diffuse)[:,None],3,axis=1)
-        delta=lp[None,:,:]-points[:,None,:];d2=np.sum(delta*delta,axis=2)
-        lambert=np.maximum(np.sum(normals[:,None,:]*delta/np.maximum(np.sqrt(d2)[:,:,None],1e-9),axis=2),0)
-        start=points+normals*.006
-        ro=start[:,None,None,:]-bc[None,None,:,:]
-        direction=lp[None,:,None,:]-start[:,None,None,:]
-        o=np.stack((ro[...,0]*co-ro[...,2]*si,np.broadcast_to(ro[...,1],ro[...,0].shape),ro[...,0]*si+ro[...,2]*co),axis=-1)
-        d=np.stack((direction[...,0]*co-direction[...,2]*si,np.broadcast_to(direction[...,1],direction[...,0].shape[:-1]+(len(co),)),direction[...,0]*si+direction[...,2]*co),axis=-1)
-        safe=np.where(np.abs(d)>.000001,d,.000001)
-        t0=(-bs-o)/safe;t1=(bs-o)/safe
-        enter=np.max(np.minimum(t0,t1),axis=-1);leave=np.min(np.maximum(t0,t1),axis=-1)
-        blocked=np.any((leave>np.maximum(enter,.001))&(enter<.998)&(leave>.001),axis=-1)
-        strength=power[None,:]/(.45+d2)*(.12+.88*lambert)
-        strength=np.where(blocked|(strength<.009)|(d2>16)|((lp[None,:,1]>2.5)&(delta[:,:,1]<0)),0,strength)
-        fade=np.clip((d2-9)/7,0,1)
-        strength*=1-fade*fade*(3-2*fade)
-        ambient=np.broadcast_to([.065,.078,.105],points.shape) if evening else np.repeat((.66+.24*np.maximum(normals@light_direction,0))[:,None],3,axis=1)
-        return ambient+strength@lc*(1 if evening else .30)
+        from bake_lighting import sample
+        import sys
+        energy=sample(baked,points,normals,upper='--small-only' not in sys.argv,small='--upper-only' not in sys.argv)
+        return np.array([.065,.078,.105])+energy[:,None]*[1,.94,.85]
+    baked=json.loads((Path(__file__).parent/'lighting-bake.json').read_text()) if evening else None
     meshes={shape:fn() for shape,fn in [('box',m.cube_geometry),('cylinder',m.cylinder_geometry),('ceiling',m.ceiling_geometry),('hexagon',m.hexagon_geometry)]}
     def grain_noise(p):
         cell=np.floor(p);f=p-cell;f=f*f*(3-2*f)
@@ -185,13 +164,19 @@ def render(bathroom=False, evening=False, overview=False, pier=False, kitchen_ov
                 values=np.array([v[2] for v in tri])
                 local=(wa[:,:,None]*values[0]/q[0,2]+wb[:,:,None]*values[1]/q[1,2]+wc[:,:,None]*values[2]/q[2,2])*z[:,:,None]
                 if not evening:local*=contact(p,normal)[...,None]
-                value=np.array(mat['color'][:3])*(1 if pat==4 else local)
+                import sys
+                is_upper=e['name'].startswith(('PlanSpot_','PlanCentral_'))
+                emitter_off=evening and (('--small-only' in sys.argv and is_upper) or ('--upper-only' in sys.argv and not is_upper))
+                value=np.array(mat['color'][:3])*((.1 if emitter_off else 1) if pat==4 else local)
                 out=value*np.asarray(texture)[...,None] if isinstance(texture,np.ndarray) else value
                 if pat!=4:out=np.minimum(out,.6)+.4*(1-np.exp(-np.maximum(out-.6,0)/.4))
                 rgb[ys,xs][mask]=out[mask] if isinstance(out,np.ndarray) and out.ndim==3 else out
                 depth[ys,xs][mask]=z[mask]
     path=Path(__file__).parent/'renders'/((room+'-detail-check.png') if room else 'kitchen-detail-cutaway.png' if kitchen_overview else 'bathroom-pier-trial.png' if pier else 'bathroom-render-geometry.png' if overview else (('bathroom' if bathroom else 'kitchen')+('-evening-check.png' if evening else '-day-check.png')))
     if cabinet_open:path=path.with_stem(path.stem+'-open')
+    import sys
+    if '--upper-only' in sys.argv:path=path.with_stem(path.stem+'-upper')
+    if '--small-only' in sys.argv:path=path.with_stem(path.stem+'-small')
     Image.fromarray((np.clip(rgb,0,1)*255).astype('uint8')).save(path)
     print(path)
 
