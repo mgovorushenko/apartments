@@ -1,0 +1,242 @@
+[
+  {
+    "label": "Кровать Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1870,
+    "model_mm": 1870
+  },
+  {
+    "label": "Кровать Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 2000,
+    "model_mm": 2000
+  },
+  {
+    "label": "Тумба у окна Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 650,
+    "model_mm": 650
+  },
+  {
+    "label": "Тумба у шкафа Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 650,
+    "model_mm": 650
+  },
+  {
+    "label": "Шкаф-купе в спальне Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1700,
+    "model_mm": 1700
+  },
+  {
+    "label": "Шкаф-купе в спальне Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Поперечный шкаф-купе прихожей Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1350,
+    "model_mm": 1350
+  },
+  {
+    "label": "Поперечный шкаф-купе прихожей Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Продольный шкаф-купе прихожей Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1800,
+    "model_mm": 1800
+  },
+  {
+    "label": "Открытая секция для верхней одежды Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 750,
+    "model_mm": 750
+  },
+  {
+    "label": "Ванна Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1800,
+    "model_mm": 1800
+  },
+  {
+    "label": "Ванна Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 750,
+    "model_mm": 750
+  },
+  {
+    "label": "Тумба с раковиной Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 700,
+    "model_mm": 700
+  },
+  {
+    "label": "Обеденный стол Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 900,
+    "model_mm": 900
+  },
+  {
+    "label": "Обеденный стол Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 900,
+    "model_mm": 900
+  },
+  {
+    "label": "Диван кухни Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1500,
+    "model_mm": 1500
+  },
+  {
+    "label": "Диван кабинета Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 2000,
+    "model_mm": 2000
+  },
+  {
+    "label": "Стеллаж кабинета Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 700,
+    "model_mm": 700
+  },
+  {
+    "label": "Рабочий стол Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1400,
+    "model_mm": 1400
+  },
+  {
+    "label": "Рабочий стол Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Пианино Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1400,
+    "model_mm": 1400
+  },
+  {
+    "label": "Тумба под ТВ Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 1500,
+    "model_mm": 1500
+  },
+  {
+    "label": "Крайний нижний модуль Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 450,
+    "model_mm": 450
+  },
+  {
+    "label": "Крайний нижний модуль Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Модуль мойки Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Модуль мойки Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Модуль посудомойки Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Модуль посудомойки Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Модуль плиты и духовки Ш",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Модуль плиты и духовки Г",
+    "source": "PDF, лист 8",
+    "expected_mm": 600,
+    "model_mm": 600
+  },
+  {
+    "label": "Спальня: сумма поперечной цепочки",
+    "source": "PDF, лист 8",
+    "expected_mm": 4675,
+    "model_mm": 4675.0
+  },
+  {
+    "label": "Спальня: 900 + 2000",
+    "source": "PDF, лист 8",
+    "expected_mm": 2900,
+    "model_mm": 2900.0
+  },
+  {
+    "label": "Проход у изножья",
+    "source": "PDF, лист 8",
+    "expected_mm": 900,
+    "model_mm": 900.0
+  },
+  {
+    "label": "Кухня: поперечная цепочка",
+    "source": "PDF, лист 8",
+    "expected_mm": 3150,
+    "model_mm": 3150.0
+  },
+  {
+    "label": "Кухня: продольная цепочка",
+    "source": "PDF, лист 8",
+    "expected_mm": 4580,
+    "model_mm": 4580.0
+  },
+  {
+    "label": "Стол — стена",
+    "source": "Поздняя правка пользователя: стол к стене на 100 мм",
+    "expected_mm": 300,
+    "model_mm": 300.0
+  },
+  {
+    "label": "Стол — кухонный фронт",
+    "source": "Поздняя правка пользователя: стол к стене на 100 мм",
+    "expected_mm": 1350,
+    "model_mm": 1350.0
+  },
+  {
+    "label": "Стол — возврат кухни",
+    "source": "PDF, лист 8",
+    "expected_mm": 950,
+    "model_mm": 950.0
+  },
+  {
+    "label": "Диван кухни — окно",
+    "source": "PDF, лист 8",
+    "expected_mm": 230,
+    "model_mm": 230.0
+  },
+  {
+    "label": "Матрас",
+    "source": "PDF, лист 8",
+    "expected_mm": 1800,
+    "model_mm": 1800.0
+  }
+]

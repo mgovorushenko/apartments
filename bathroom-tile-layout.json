@@ -1,0 +1,2163 @@
+{
+  "units": "m",
+  "jointMm": 2,
+  "note": "Раскладка модели, подрезки по предварительным чистовым граням; не карта заказа или монтажа.",
+  "reference": {
+    "corner": [
+      8.92664835164835,
+      3.605
+    ],
+    "starterBounds": [
+      8.32464835164835,
+      8.924648351648349,
+      3.003,
+      3.603
+    ],
+    "gridOrigin": [
+      8.32464835164835,
+      3.003
+    ],
+    "floorPitchMm": 602,
+    "wallFormatMm": [
+      600,
+      1200
+    ],
+    "jointMm": 2,
+    "note": "Чистовой угол между лицевой гранью короба инсталляции и венткоробом; целая плитка 600 × 600, отступ от коробов 2 мм.",
+    "installationHeightMm": 1203
+  },
+  "pieces": [
+    {
+      "name": "Tile_BathFeature_031",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.261000000000001,
+        7.4590000000000005,
+        0.022,
+        1.22
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_032",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.261000000000001,
+        7.4590000000000005,
+        1.2219999999999998,
+        2.42
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_033",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.261000000000001,
+        7.4590000000000005,
+        2.4219999999999997,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_034",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.461000000000001,
+        7.659000000000001,
+        0.020999999999999908,
+        0.42000000000000004
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_035",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.461000000000001,
+        7.659000000000001,
+        0.42200000000000004,
+        1.62
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_036",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.461000000000001,
+        7.659000000000001,
+        1.6219999999999999,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_037",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.661000000000001,
+        7.859000000000001,
+        0.020999999999999908,
+        0.8200000000000001
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_038",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.661000000000001,
+        7.859000000000001,
+        0.8220000000000001,
+        2.02
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_039",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.661000000000001,
+        7.859000000000001,
+        2.022,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_040",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.8610000000000015,
+        8.059000000000001,
+        0.022,
+        1.22
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_041",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.8610000000000015,
+        8.059000000000001,
+        1.2219999999999998,
+        2.42
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_042",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.8610000000000015,
+        8.059000000000001,
+        2.4219999999999997,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_043",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.061,
+        8.259000000000002,
+        0.020999999999999908,
+        0.42000000000000004
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_044",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.061,
+        8.259000000000002,
+        0.42200000000000004,
+        1.62
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_045",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.061,
+        8.259000000000002,
+        1.6219999999999999,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_046",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.261000000000001,
+        8.459000000000001,
+        0.020999999999999908,
+        0.8200000000000001
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_047",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.261000000000001,
+        8.459000000000001,
+        0.8220000000000001,
+        2.02
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_048",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.261000000000001,
+        8.459000000000001,
+        2.022,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_049",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.461,
+        8.659,
+        0.022,
+        1.22
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_050",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.461,
+        8.659,
+        1.2219999999999998,
+        2.42
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_051",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.461,
+        8.659,
+        2.4219999999999997,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_052",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.661,
+        8.859000000000002,
+        0.020999999999999908,
+        0.42000000000000004
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_053",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.661,
+        8.859000000000002,
+        0.42200000000000004,
+        1.62
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_054",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.661,
+        8.859000000000002,
+        1.6219999999999999,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_055",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.861,
+        9.059000000000001,
+        0.020999999999999908,
+        0.8200000000000001
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_056",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.861,
+        9.059000000000001,
+        0.8220000000000001,
+        2.02
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_057",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.861,
+        9.059000000000001,
+        2.022,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_058",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        9.061,
+        9.09,
+        0.022,
+        1.22
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_059",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        9.061,
+        9.09,
+        1.2219999999999998,
+        2.42
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathFeature_060",
+      "formatMm": [
+        200,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        9.061,
+        9.09,
+        2.4219999999999997,
+        2.75
+      ],
+      "staggerMm": 400,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_016",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.3199999999999996,
+        1.7970000000000002,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_017",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.3199999999999996,
+        1.7970000000000002,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_018",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.3199999999999996,
+        1.7970000000000002,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_019",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.7990000000000002,
+        2.399,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_020",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.7990000000000002,
+        2.399,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_021",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.7990000000000002,
+        2.399,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_022",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.4010000000000002,
+        3.0010000000000003,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_023",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.4010000000000002,
+        3.0010000000000003,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_024",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.4010000000000002,
+        3.0010000000000003,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_025",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.003,
+        3.603,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_026",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.003,
+        3.603,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_027",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.003,
+        3.603,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_028",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.605,
+        4.064705882352942,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_029",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.605,
+        4.064705882352942,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathEast_030",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.605,
+        4.064705882352942,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestUpper_007",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.3199999999999998,
+        1.7970000000000002,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestUpper_008",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.3199999999999998,
+        1.7970000000000002,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestUpper_009",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.3199999999999998,
+        1.7970000000000002,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestUpper_010",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.7990000000000002,
+        2.23,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestUpper_011",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.7990000000000002,
+        2.23,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestUpper_012",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        1.7990000000000002,
+        2.23,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestLower_007",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.0584239130434776,
+        3.603,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestLower_008",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.0584239130434776,
+        3.603,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestLower_009",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.0584239130434776,
+        3.603,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestLower_010",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.605,
+        4.064705882352942,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestLower_011",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.605,
+        4.064705882352942,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathWestLower_012",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.605,
+        4.064705882352942,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathDoorLintel_003",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.23,
+        2.399,
+        2.0999999999999996,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathDoorLintel_004",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.23,
+        2.399,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathDoorLintel_005",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.4010000000000002,
+        3.0010000000000003,
+        2.0999999999999996,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathDoorLintel_006",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.4010000000000002,
+        3.0010000000000003,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathDoorLintel_007",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.003,
+        3.058423913043478,
+        2.0999999999999996,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathDoorLintel_008",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.003,
+        3.058423913043478,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_013",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.260000000000001,
+        7.720648351648349,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_014",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.260000000000001,
+        7.720648351648349,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_015",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.260000000000001,
+        7.720648351648349,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_016",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_017",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_018",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_019",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_020",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_021",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_022",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_023",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_BathSouth_024",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_010",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.665659340659342,
+        7.720648351648349,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_011",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.665659340659342,
+        7.720648351648349,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_012",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.665659340659342,
+        7.720648351648349,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_013",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_014",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_015",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_016",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_017",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_018",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_019",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_020",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentFront_021",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentSide_004",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.62,
+        4.064705882352942,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentSide_005",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.62,
+        4.064705882352942,
+        1.2249999999999999,
+        2.425
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "Tile_VentSide_006",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.62,
+        4.064705882352942,
+        2.427,
+        2.75
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "FloorTile_027",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.260000000000001,
+        7.720648351648349,
+        1.3199999999999996,
+        1.7970000000000002
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        -3
+      ]
+    },
+    {
+      "name": "FloorTile_028",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.260000000000001,
+        7.720648351648349,
+        1.7990000000000002,
+        2.399
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        -2
+      ]
+    },
+    {
+      "name": "FloorTile_029",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.260000000000001,
+        7.720648351648349,
+        2.4010000000000002,
+        3.0010000000000003
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        -1
+      ]
+    },
+    {
+      "name": "FloorTile_030",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.260000000000001,
+        7.720648351648349,
+        3.003,
+        3.603
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        0
+      ]
+    },
+    {
+      "name": "FloorTile_031",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.260000000000001,
+        7.648824175824177,
+        3.605,
+        4.064705882352942
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        1
+      ]
+    },
+    {
+      "name": "FloorTile_032",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        1.3199999999999996,
+        1.7970000000000002
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -1,
+        -3
+      ]
+    },
+    {
+      "name": "FloorTile_033",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        1.7990000000000002,
+        2.399
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -1,
+        -2
+      ]
+    },
+    {
+      "name": "FloorTile_034",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        2.4010000000000002,
+        3.0010000000000003
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -1,
+        -1
+      ]
+    },
+    {
+      "name": "FloorTile_035",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        3.003,
+        3.603
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -1,
+        0
+      ]
+    },
+    {
+      "name": "FloorTile_036",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.259087912087912,
+        8.322648351648349,
+        3.605,
+        4.064705882352942
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -1,
+        1
+      ]
+    },
+    {
+      "name": "FloorTile_037",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        1.3199999999999996,
+        1.7970000000000002
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        0,
+        -3
+      ]
+    },
+    {
+      "name": "FloorTile_038",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        1.7990000000000002,
+        2.399
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        0,
+        -2
+      ]
+    },
+    {
+      "name": "FloorTile_039",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        2.4010000000000002,
+        3.0010000000000003
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        0,
+        -1
+      ]
+    },
+    {
+      "name": "FloorTile_040",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        3.003,
+        3.603
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "FloorTile_041",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        3.605,
+        4.064705882352942
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "FloorTile_042",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        1.3199999999999996,
+        1.7970000000000002
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        1,
+        -3
+      ]
+    },
+    {
+      "name": "FloorTile_043",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.92664835164835,
+        9.09,
+        1.7990000000000002,
+        2.399
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        1,
+        -2
+      ]
+    },
+    {
+      "name": "FloorTile_044",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        9.077,
+        9.09,
+        2.4010000000000002,
+        3.0010000000000003
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        1,
+        -1
+      ]
+    },
+    {
+      "name": "FloorTile_045",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.92664835164835,
+        9.077,
+        2.4010000000000002,
+        2.8339239130434786
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        1,
+        -1
+      ]
+    },
+    {
+      "name": "FloorTile_046",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        9.077,
+        9.09,
+        3.003,
+        3.603
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        1,
+        0
+      ]
+    },
+    {
+      "name": "FloorTile_047",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        9.077,
+        9.09,
+        3.605,
+        4.064705882352942
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "FloorTile_048",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.92664835164835,
+        9.077,
+        3.6325882352941177,
+        4.064705882352942
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "FloorTile_049",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.17,
+        7.26,
+        2.23,
+        2.399
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        -2
+      ]
+    },
+    {
+      "name": "FloorTile_050",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.17,
+        7.26,
+        2.4010000000000002,
+        3.0010000000000003
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        -1
+      ]
+    },
+    {
+      "name": "FloorTile_051",
+      "formatMm": [
+        600,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        7.17,
+        7.26,
+        3.003,
+        3.058423913043478
+      ],
+      "staggerMm": 0,
+      "jointMm": 2,
+      "gridCell": [
+        -2,
+        0
+      ]
+    },
+    {
+      "name": "BathApronTile_001",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.275,
+        7.720648351648349,
+        0.023,
+        0.579
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathApronTile_002",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        7.722648351648349,
+        8.322648351648349,
+        0.023,
+        0.579
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathApronTile_003",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.32464835164835,
+        8.924648351648349,
+        0.023,
+        0.579
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathApronTile_004",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.075000000000001,
+        0.023,
+        0.579
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileFront_001",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        2.8359239130434784,
+        3.0010000000000003,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileFront_002",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.003,
+        3.603,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileFront_003",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 0,
+      "bounds": [
+        3.605,
+        3.630588235294118,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileNorth_001",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.075,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileSouth_001",
+      "formatMm": [
+        600,
+        1200
+      ],
+      "axis": 2,
+      "bounds": [
+        8.92664835164835,
+        9.075,
+        0.023,
+        1.2229999999999999
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileTop_001",
+      "formatMm": [
+        1200,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.92664835164835,
+        9.075,
+        2.8359239130434784,
+        3.0010000000000003
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileTop_002",
+      "formatMm": [
+        1200,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.92664835164835,
+        9.075,
+        3.003,
+        3.603
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    },
+    {
+      "name": "BathInstallationTileTop_003",
+      "formatMm": [
+        1200,
+        600
+      ],
+      "axis": 1,
+      "bounds": [
+        8.92664835164835,
+        9.075,
+        3.605,
+        3.630588235294118
+      ],
+      "staggerMm": 0,
+      "jointMm": 2
+    }
+  ]
+}

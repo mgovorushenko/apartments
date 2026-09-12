@@ -1,0 +1,33 @@
+<div id="apartment-3d-root">
+  <style>
+/*__VIEWER_CSS__*/
+  </style>
+  <div class="viz-controls apt-toolbar" aria-label="Управление моделью">
+    <button type="button" class="btn" data-action="walls" aria-pressed="false">Стены: срез 1,35 м</button>
+    <button type="button" class="btn" data-action="rough" aria-pressed="false">Черновой</button>
+    <button type="button" class="btn" data-action="finished" aria-pressed="false">Чистовой</button>
+    <button type="button" class="btn" data-action="furniture" aria-pressed="true">Мебель</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">Сбросить вид</button>
+    <button type="button" class="btn" data-action="top" aria-pressed="false">Вид сверху</button>
+    <button type="button" class="btn" data-action="kitchen">Кухня</button>
+    <button type="button" class="btn" data-action="bathroom">Ванная</button>
+    <button type="button" class="btn" data-action="evening" aria-pressed="false">Вечер</button>
+    <button type="button" class="btn" data-action="doors" aria-pressed="false">Закрыть двери</button>
+    <span class="text-small text-muted apt-meta">PDF дизайнера · толщины стен и высоты предварительные</span>
+  </div>
+  <div class="apt-buildup text-small" aria-label="Высота после отделки"></div>
+  <details class="text-small"><summary>Слои отделки · предварительные значения</summary><div class="apt-layer-values"></div></details>
+  <div class="viz-controls"><label class="form-label">Предмет <select class="form-select" data-action="object"><option value="">Выберите или нажмите в модели</option></select></label><button type="button" class="btn" data-action="cabinet" aria-pressed="false" hidden>Открыть пенал</button></div>
+  <div class="apt-inspection text-small" role="status">Нажмите на предмет, чтобы увидеть размеры.</div>
+  <label class="form-check" data-action="towels-label" hidden><input class="form-check-input" type="checkbox" data-action="towels" checked><span class="form-check-label">Полотенца на сушителе</span></label>
+  <div class="apt-stage">
+    <canvas role="img" aria-label="Вращаемая трехмерная модель квартиры по плану"></canvas>
+    <div class="apt-hint text-small">Мышь — поворот взгляда · WASD — движение · ↑/↓ — высота · ←/→ — поворот · колесо — вперёд/назад · Shift + мышь — сдвиг</div>
+  </div>
+  <div class="apt-error text-destructive" role="alert"></div>
+  <div class="sr-only" aria-live="polite"></div>
+  <script>
+/*__VIEWER_CORE__*/
+    ApartmentViewer.mount("apartment-3d-root", /*__SCENE_JSON__*/);
+  </script>
+</div>

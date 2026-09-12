@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+tmp/
+renders/
+model-*.png
+plan-overlay.png
+apartment-model.usda
+(A Document Being Saved By usdzip)/
+.env
+.env.*

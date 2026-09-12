@@ -1,0 +1,67 @@
+#apartment-3d-root {
+  position: relative;
+  width: 100%;
+  color: var(--foreground);
+}
+
+#apartment-3d-root .apt-toolbar {
+  justify-content: flex-start;
+  margin-bottom: 8px;
+}
+
+#apartment-3d-root .apt-meta {
+  margin-inline-start: auto;
+}
+
+#apartment-3d-root .apt-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 68vw, 600px);
+  overflow: hidden;
+}
+
+#apartment-3d-root canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+#apartment-3d-root canvas:active {
+  cursor: grabbing;
+}
+
+#apartment-3d-root .apt-hint {
+  position: absolute;
+  inset-inline-start: 10px;
+  inset-block-end: 8px;
+  max-width: calc(100% - 20px);
+  pointer-events: none;
+  color: var(--muted-foreground);
+}
+
+#apartment-3d-root .apt-error {
+  display: none;
+  padding-block: 16px;
+}
+
+#apartment-3d-root[data-evening="true"] .apt-hint {
+  color: #eeeae0;
+  text-shadow: 0 1px 3px #000;
+}
+
+#apartment-3d-root[data-error="true"] .apt-error {
+  display: block;
+}
+
+#apartment-3d-root[data-error="true"] .apt-stage {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  #apartment-3d-root .apt-meta {
+    flex-basis: 100%;
+    margin-inline-start: 0;
+  }
+}

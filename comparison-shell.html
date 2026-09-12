@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Сверка модели с замерами</title>
+<style>
+body{font:16px system-ui;margin:24px;color:#252525;background:#fafafa}
+main{max-width:1100px;margin:auto}nav,.controls{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+a{color:inherit}button,select{font:inherit;padding:8px}label{display:flex;align-items:center;gap:8px}
+.stage{position:relative;width:100%;aspect-ratio:1}.stage img,.stage svg{position:absolute;width:100%;height:100%;left:0;top:0}
+polygon{fill:none;stroke-width:1.5;vector-effect:non-scaling-stroke}.wall{stroke:#176eeb}.furniture{stroke:#dc5b0c}.door{stroke:#aa40d7}
+.no-furniture .furniture{display:none}p{max-width:75ch;font-size:14px;line-height:1.5}
+</style>
+<main>
+<nav><a href="index.html">← Вращаемая модель</a><a href="accuracy.md">Открытые размеры и допущения</a></nav>
+<h1>Сверка вида сверху</h1>
+<p>Кабинет: рабочий стол перенесён в нижний левый угол, добавлены два монитора. Стеллаж со стороны окна теперь высокий и открытый. Телевизор сдвинут на 10 см вдоль стены в сторону окна.</p>
+<p>Последнее уточнение: перегородка между шкафами 58 × 8 см, столы 120 × 75 и 150 × 86 см, новая расстановка стульев, верхний угол кухни глубиной 35 см, пенал до потолка, зеркало без шкафчика и душ со шторкой. Размеры стен сохраняются.</p>
+<p>Учтены последующие правки пользователя: шкаф постирочной, дверь, раковина и инсталляция, верх кухни, нижний модуль вместо пенала, прямоугольный стол и четыре стула. Их отличия от исходной подложки намеренные.</p>
+<div class="controls">
+<label>Подложка <select id="source"><option value="furniture">Расстановка мебели</option><option value="measurements">Замеры</option></select></label>
+<label>Контуры 3D <input id="opacity" type="range" min="0" max="100" value="90"></label>
+<label><input type="checkbox" id="furniture" checked>Мебель</label>
+</div>
+<p>Синие контуры — стены, оранжевые — мебель, фиолетовые — двери. Контуры рассчитаны из геометрии модели. Перемычки над проёмами скрыты. Наведите на контур, чтобы увидеть название объекта.</p>
+<div class="stage" id="stage">
+<img id="furniture-source" src="__SOURCE1__" alt="Исходная планировка Лены">
+<img id="measurement-source" src="__SOURCE0__" alt="Исходные замеры" hidden>
+<svg id="overlay" viewBox="0 0 1200 1200" role="img" aria-label="Проекции объектов модели">__POLYGONS__</svg>
+</div>
+<script>
+const selector=document.getElementById('source'), overlay=document.getElementById('overlay');
+selector.addEventListener('change',()=>{
+ document.getElementById('furniture-source').hidden=selector.value!=='furniture';
+ document.getElementById('measurement-source').hidden=selector.value!=='measurements';
+});
+document.getElementById('opacity').addEventListener('input',e=>overlay.style.opacity=e.target.value/100);
+document.getElementById('furniture').addEventListener('change',e=>overlay.classList.toggle('no-furniture',!e.target.checked));
+overlay.style.opacity=.9;
+</script>
+</main>
+</html>
