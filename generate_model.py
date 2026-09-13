@@ -249,6 +249,8 @@ def build_scene() -> None:
     build_catalog(sys.modules[__name__])
     from designer_revision import build as apply_designer_revision
     apply_designer_revision(sys.modules[__name__])
+    from interior_revision import prepare_door, build as build_interior_revision
+    prepare_door(sys.modules[__name__])
     from comfort_revision import build as build_comfort
     build_comfort(sys.modules[__name__])
     from door_trim import build as build_door_trim
@@ -271,6 +273,17 @@ def build_scene() -> None:
     build_cabinet_motion(sys.modules[__name__])
     from viewer_refinement import build as build_viewer_refinement
     build_viewer_refinement(sys.modules[__name__])
+    build_interior_revision(sys.modules[__name__])
+    from study_style import build as build_study_style
+    build_study_style(sys.modules[__name__])
+    from bedroom_style import build as build_bedroom_style
+    build_bedroom_style(sys.modules[__name__])
+    from model_polish import build as build_model_polish
+    build_model_polish(sys.modules[__name__])
+    from detail_refinement import build as build_detail_refinement
+    build_detail_refinement(sys.modules[__name__])
+    from finish_review import build as build_finish_review
+    build_finish_review(sys.modules[__name__])
     for e in ELEMENTS:e.pop('inspectId',None)
     build_catalog(sys.modules[__name__])
 
@@ -401,6 +414,8 @@ def build_glb(path: Path) -> None:
     ceiling_accessors = add_geometry(*ceiling_geometry())
 
     material_names = list(MATERIALS)
+    artwork_view=append_blob((Path(__file__).parent/ARTWORK['source']).read_bytes(),34962)
+    buffer_views[artwork_view].pop('target',None)
     gltf_materials = []
     for material_name in material_names:
         spec = MATERIALS[material_name]
@@ -418,6 +433,8 @@ def build_glb(path: Path) -> None:
             material["alphaMode"] = "BLEND"
         if spec.get('pattern')==4:
             material['emissiveFactor']=spec['color'][:3]
+        if spec.get('pattern')==7:
+            material['pbrMetallicRoughness']['baseColorTexture']={'index':0}
         gltf_materials.append(material)
 
     meshes: list[dict] = []
@@ -446,6 +463,14 @@ def build_glb(path: Path) -> None:
     for element in ELEMENTS:
         element = resolved(element)
         mesh_index=mesh_map[(element['shape'],element['material'])]
+        if element.get('artwork'):
+            positions,normals,indices=cube_geometry()
+            pa,na,ia=add_geometry(positions,normals,indices)
+            uv=artwork_uv(element,positions)
+            view=append_blob(struct.pack(f'<{len(uv)}f',*uv),34962)
+            ua=len(accessors);accessors.append(dict(bufferView=view,componentType=5126,count=len(uv)//2,type='VEC2'))
+            mesh_index=len(meshes)
+            meshes.append(dict(name=element['name']+'_photo',primitives=[dict(attributes={'POSITION':pa,'NORMAL':na,'TEXCOORD_0':ua},indices=ia,material=material_names.index(element['material']))]))
         if element.get('detail'):
             key=json.dumps([element['detail'],element['size'],element['material']],sort_keys=True)
             if key not in detail_map:
@@ -472,6 +497,9 @@ def build_glb(path: Path) -> None:
         "nodes": nodes,
         "meshes": meshes,
         "materials": gltf_materials,
+        "images": [{"bufferView":artwork_view,"mimeType":"image/png"}],
+        "textures": [{"source":0,"sampler":0}],
+        "samplers": [{"magFilter":9729,"minFilter":9987,"wrapS":33071,"wrapT":33071}],
         "accessors": accessors,
         "bufferViews": buffer_views,
         "buffers": [{"byteLength": len(binary)}],
@@ -487,6 +515,18 @@ def build_glb(path: Path) -> None:
     glb.extend(struct.pack("<I4s", len(binary), b"BIN\x00"))
     glb.extend(binary)
     path.write_bytes(glb)
+
+
+def artwork_uv(element, positions):
+    mapping=element['artwork'];along=mapping['along'];sign=mapping['sign']*(-1 if mapping['axis']==0 else 1)
+    ratio=element['size'][along]/element['size'][1]/mapping.get('ratio',1);uv=[]
+    for i in range(0,len(positions),3):
+        p=positions[i:i+3];u=.5+p[along]*sign;v=.5-p[1]
+        if ratio>1:v=.5+(v-.5)/ratio
+        else:u=.5+(u-.5)*ratio
+        ox,oy,sx,sy=mapping.get('region',[0,0,1,1])
+        uv.extend((ox+u*sx,oy+v*sy))
+    return uv
 
 
 def usd_identifier(value: str) -> str:
@@ -531,6 +571,25 @@ def build_usda(path: Path) -> None:
                 "        }",
             ]
         )
+        if spec.get('pattern')==7:
+            # Insert reader and image shaders before this material's closing brace.
+            lines[-1:-1]=[
+                '            def Shader "UVReader" {',
+                '                uniform token info:id = "UsdPrimvarReader_float2"',
+                '                token inputs:varname = "st"',
+                '                float2 outputs:result',
+                '            }',
+                '            def Shader "Image" {',
+                '                uniform token info:id = "UsdUVTexture"',
+                f'                asset inputs:file = @{ARTWORK["source"]}@',
+                f'                float2 inputs:st.connect = </Apartment/Materials/{ident}/UVReader.outputs:result>',
+                '                token inputs:sourceColorSpace = "sRGB"',
+                '                float3 outputs:rgb',
+                '            }']
+            colorline=f"                color3f inputs:diffuseColor = ({r:.5f}, {g:.5f}, {b:.5f})"
+            for j in range(len(lines)-1,-1,-1):
+                if lines[j]==colorline:
+                    lines[j]=f'                color3f inputs:diffuseColor.connect = </Apartment/Materials/{ident}/Image.outputs:rgb>';break
     lines.extend(["    }", ""])
 
     for element in ELEMENTS:
@@ -540,7 +599,7 @@ def build_usda(path: Path) -> None:
         sx, sy, sz = element["size"]
         degrees = math.degrees(element["rotation"])
         material = usd_identifier(element["material"])
-        primitive = 'Mesh' if element.get('detail') else {"box":"Cube", "cylinder":"Cylinder", "hexagon":"Mesh", "ceiling":"Mesh"}[element["shape"]]
+        primitive = 'Mesh' if element.get('detail') or element.get('artwork') else {"box":"Cube", "cylinder":"Cylinder", "hexagon":"Mesh", "ceiling":"Mesh"}[element["shape"]]
         lines.extend(
             [
                 f'    def Xform "{name}"',
@@ -560,7 +619,7 @@ def build_usda(path: Path) -> None:
             lines.extend(['            uniform token axis = "Y"', "            double height = 1", "            double radius = 0.5"])
         else:
             from detail_geometry import mesh as detail_mesh
-            positions,normals,indices=detail_mesh(element) if element.get('detail') else ceiling_geometry() if element['shape']=='ceiling' else hexagon_geometry()
+            positions,normals,indices=detail_mesh(element) if element.get('detail') else cube_geometry() if element.get('artwork') else ceiling_geometry() if element['shape']=='ceiling' else hexagon_geometry()
             triples=lambda values: ', '.join('('+', '.join(f'{v:.6f}' for v in values[i:i+3])+')' for i in range(0,len(values),3))
             lines.extend([
                 '            uniform token subdivisionScheme = "none"',
@@ -569,6 +628,9 @@ def build_usda(path: Path) -> None:
                 '            int[] faceVertexCounts = ['+', '.join(['3']*(len(indices)//3))+']',
                 '            int[] faceVertexIndices = ['+', '.join(map(str,indices))+']',
             ])
+            if element.get('artwork'):
+                uv=artwork_uv(element,positions)
+                lines.append('            texCoord2f[] primvars:st = ['+', '.join(f'({uv[i]:.6f}, {1-uv[i+1]:.6f})' for i in range(0,len(uv),2))+'] (interpolation = "vertex")')
         lines.extend([f"            rel material:binding = </Apartment/Materials/{material}>", "        }", "    }", ""])
     lines.append("}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -581,13 +643,15 @@ def scene_data():
             "title": "Сертолово · квартира",
             "ceilingHeight": CEILING_HEIGHT,
             "units": "м",
-            "revision": "2026-09-12-baked-lighting",
+            "revision": "2026-09-13-material-workspace-window-review-local",
             "horizontalScale": "размерные привязки + обводка схемы; см. accuracy.md",
             "finishes": FINISH_SETTINGS,
             "designerSource": "07-08 План расстановки мебели 4.pdf, листы 7–8",
             "accuracy": "Подписанные габариты мебели — по PDF. Неподписанные оси и толщины стен — предварительные.",
         },
         "materials": MATERIALS,
+        "artwork": globals().get('ARTWORK'),
+        "doorOpeningLimits": globals().get('DOOR_OPENING_LIMITS',[]),
         "elements": ELEMENTS,
         "objects": FURNITURE_CATALOG,
         "lights": SCENE_LIGHTS,
@@ -665,7 +729,7 @@ def main() -> None:
         usdzip_scratch = output / "(A Document Being Saved By usdzip)"
         if usdz_path.exists():
             usdz_path.unlink()
-        subprocess.run([str(usdzip), str(usdz_path), usda_path.name], cwd=output, check=True)
+        subprocess.run([str(usdzip), str(usdz_path), usda_path.name, ARTWORK['source']], cwd=output, check=True)
         if usdzip_scratch.is_dir() and not any(usdzip_scratch.iterdir()):
             usdzip_scratch.rmdir()
 

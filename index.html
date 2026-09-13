@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="light dark">
   <title>Сертолово · квартира</title>
-  <link rel="stylesheet" href="viewer.css?v=20260912b">
+  <link rel="stylesheet" href="viewer.css?v=20260913h">
 </head>
 <body>
 <main>
@@ -28,9 +28,9 @@
         <button type="button" class="btn" data-action="doors" aria-pressed="false">Закрыть двери</button>
       </div>
       <button type="button" class="btn evening-button" data-action="evening" aria-pressed="false">Вечер</button>
-      <div class="control-group apt-light-controls" hidden aria-label="Сценарий освещения">
-        <button type="button" class="btn" data-action="upper-light" aria-pressed="true">Верхний свет</button>
-        <button type="button" class="btn" data-action="small-light" aria-pressed="true">Малый свет</button>
+      <div class="control-group apt-light-controls" aria-label="Сценарий освещения">
+        <button type="button" class="btn" data-action="upper-light" aria-pressed="false">Верхний свет</button>
+        <button type="button" class="btn" data-action="small-light" aria-pressed="false">Малый свет</button>
       </div>
     </div>
     <div class="apt-stage">
@@ -49,8 +49,8 @@
   </div>
   <footer><span>Размеры отделки и световые характеристики предварительные</span><nav aria-label="Файлы проекта"><a href="apartment-model.glb" download>GLB ↓</a><a href="apartment-model.usdz" download>USDZ ↓</a><a href="comparison.html">Сверка плана</a><a href="accuracy.md">Точность модели</a></nav></footer>
 </main>
-<script src="scene-data.js?v=20260912b"></script>
-<script src="viewer-core.js?v=20260912b"></script>
+<script src="scene-data.js?v=20260913h"></script>
+<script src="viewer-core.js?v=20260913h"></script>
 <script>ApartmentViewer.mount("apartment-3d-root",window.APARTMENT_SCENE);</script>
 </body>
 </html>

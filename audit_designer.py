@@ -20,12 +20,13 @@ def checks():
         'bedroom-wardrobe':{0:1700,1:600},'hall-wardrobe':{0:1350,1:600},
         'entry-wardrobe':{0:1800},'entry-shoes':{0:750},'bath':{0:1800,1:750},
         'basin':{0:700},'table':{0:900,1:900},'kitchen-sofa':{0:1500},
-        'study-sofa':{0:2000},'study-shelf':{0:700},'desk':{0:1400,1:600},
+        'study-sofa':{0:2000},'study-shelf':{0:700},'desk':{0:1400},
         'piano':{0:1400},'tv-console':{0:1500},'end-unit':{0:450,1:600},
         'sink-unit':{0:600,1:600},'dishwasher':{0:600,1:600},'oven':{0:600,1:600},
     }.items():
         for axis,expected in axes.items():check(by_id[ident]['label']+' '+('Ш','Г','В')[axis],expected,by_id[ident]['dimensionsMm'][axis])
     def node(prefix):return model.resolved(next(e for e in model.ELEMENTS if e['name'].startswith(prefix)))
+    check('Рабочий стол Г',800,by_id['desk']['dimensionsMm'][1],'Правка пользователя 2026-09-13: глубина 800 мм вместо PDF 600 мм')
     def edge(e,axis,sign):return e['position'][axis]+sign*e['size'][axis]/2
     check('Спальня: сумма поперечной цепочки',4675,1000*(edge(node('WallFinish_BedroomEastUpper'),0,-1)-edge(node('WallFinish_BedroomWestUpper'),0,1)))
     check('Спальня: 900 + 2000',2900,1000*(edge(node('WallFinish_BedroomSouth'),2,-1)-edge(node('WallFinish_BedroomNorth'),2,1)))

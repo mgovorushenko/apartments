@@ -11,11 +11,11 @@ assert len(sides)==2
 near(edge(sides[0],0,-1),7.175);near(edge(sides[1],0,1),7.875)
 near(edge(fridge,0,-1)-edge(sides[0],0,1),.032)
 near(edge(sides[1],0,-1)-edge(fridge,0,1),.032)
-for side in sides:
- assert side['material']=='kitchen_ivory'
+for i,side in enumerate(sides):
+ assert side['material']==('kitchen_oak' if i==0 else 'kitchen_ivory')
  near(edge(side,1,1),2.75)
 near(edge(sides[1],0,1),edge(node('FreezerBase_001'),0,-1))
-assert node('BathroomVanity_001')['material']==node('BathTallCabinetFacadePanel_')['material']=='bath_oak'
+assert node('BathroomVanity_001')['material']==node('BathTallCabinetFacadePanel_')['material']=='kitchen_oak'
 assert node('ToiletBowl_')['detail']['type']=='lathe'
 assert node('ToiletSeatOpening_')['material']=='ceramic'
 near(node('ToiletBowl_')['position'][2],node('ToiletInstallationEnclosure_')['position'][2])

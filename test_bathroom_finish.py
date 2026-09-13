@@ -1,7 +1,11 @@
 """Tile sizes in final metres, deliberate cut pieces, preserved openings/fixtures."""
 import math
 import generate_model as m
+import finish_review
+finish_review.build=lambda api:None  # Isolate the earlier stage; current full scene has dedicated regression coverage.
 import bathroom_finish
+import model_polish
+model_polish.build=lambda api:None  # Test this build stage before the later whole-model review.
 
 build=bathroom_finish.build
 bathroom_finish.build=lambda api:None

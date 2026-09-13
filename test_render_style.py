@@ -1,8 +1,14 @@
 """Reference styling must not copy generated geometry into the measured shell."""
 import copy
 import generate_model as m
+import finish_review
+finish_review.build=lambda api:None  # Isolate the earlier stage; current full scene has dedicated regression coverage.
 import render_style
 import scene_lighting
+import model_polish
+import detail_refinement
+detail_refinement.build=lambda api:None  # Requires the complete styled scene.
+model_polish.build=lambda api:None  # Original render palette; later carcase changes tested separately.
 
 # This test isolates styling; plan lighting depends on the styled sconces.
 def no_plan_lighting(api):

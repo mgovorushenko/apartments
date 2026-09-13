@@ -16,4 +16,18 @@ assert np.all(upper>small), (upper,small)
 assert np.allclose(sample(data,points,normals),upper+small)
 assert np.all(sample(data,points,normals,upper=False,small=False)==0)
 assert data['variants']['open']!=data['variants']['closed']
+assert data['indirect']['open']['bounces']==3 and data['indirect']['closed']['bounces']==3
+ceiling=points.copy();ceiling[:,1]=2.749;down=-normals
+for closed in (False,True):
+    upper_ceiling=sample(data,ceiling,down,closed=closed,upper=True,small=False)
+    small_ceiling=sample(data,ceiling,down,closed=closed,upper=False,small=True)
+    assert np.all(upper_ceiling>.25),(closed,upper_ceiling) # reduced upper circuit
+    assert np.all(small_ceiling>.035),(closed,small_ceiling)
+    assert np.all(upper_ceiling>small_ceiling)
+    assert np.allclose(sample(data,ceiling,down,closed=closed),upper_ceiling+small_ceiling)
+    assert np.all(sample(data,ceiling,down,closed=closed,upper=False,small=False)==0)
+    # With both circuits disabled, the new linear ambient maps to a dark room.
+    ambient=np.array([.004,.005,.008])*.96
+    assert np.max((ambient/(1+ambient))**(1/2.2))<.12
+print('Passed: diffuse ceilings receive upper/small bounce light independently; both door variants and darkness preserved.')
 print('Passed: upper light reaches floors in every principal room; independently additive circuits, dark state, distinct door variants. Upper irradiance:',upper.round(3))

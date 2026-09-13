@@ -22,7 +22,16 @@
     batch.normals.push(normal[0], normal[1], normal[2]);
     batch.colors.push(color[0], color[1], color[2], color[3]);
     if (!batch.surfaces) batch.surfaces=[];
-    batch.surfaces.push(...(batch.surface || [0,0,0,0]));
+    if(batch.artwork){
+      const e=batch.artwork,along=e.artwork.along,a=e.rotation||0;
+      const q=rotateY(point.map((v,i)=>v-e.position[i]),-a);
+      const flip= (e.artwork.axis===0?-e.artwork.sign:e.artwork.sign);
+      const ratio=e.size[along]/e.size[1]/(e.artwork.ratio||1);
+      let u=.5+q[along]/e.size[along]*flip,v=.5-q[1]/e.size[1];
+      if(ratio>1)v=.5+(v-.5)/ratio;else u=.5+(u-.5)*ratio;
+      const region=e.artwork.region||[0,0,1,1];
+      batch.surfaces.push(7,region[0]+u*region[2],region[1]+v*region[3],0);
+    }else batch.surfaces.push(...(batch.surface || [0,0,0,0]));
   }
 
   function rotateY(point, angle) {
@@ -155,7 +164,38 @@
         indices.push(...((winding??dot(cross(ab,ac),normals[a]))>=0?[a,b,c,a,c,d]:[a,c,b,a,d,c]));
       }
     }
-    if(['rounded','pillow','bow'].includes(kind)){
+    if(kind==='coverlet'){
+      const top=cfg.top??.14,drop=cfg.drop??.32,rise=cfg.pillowRise??.105;
+      const point=(x,z)=>{
+        const bumps=[-1,1].reduce((s,sign)=>s+Math.exp(-(((x-sign*size[0]*.23)/(.24*size[0]))**4)),0);
+        const pillow=rise*Math.min(1,bumps)*Math.exp(-(((z+size[2]*.34)/.23)**4));
+        return [x,top+pillow+.002*Math.sin(x*24+z*8)*Math.sin(z*13),z];
+      };
+      const normal=(x,z)=>{const eps=.00001;return normalize([-(point(x+eps,z)[1]-point(x-eps,z)[1])/(2*eps),1,-(point(x,z+eps)[1]-point(x,z-eps)[1])/(2*eps)])};
+      const xs=Array.from({length:33},(_,i)=>-half[0]+size[0]*i/32),zs=Array.from({length:41},(_,i)=>-half[2]+size[2]*i/40);
+      patch((x,z)=>[point(x,z),normal(x,z)],xs,zs);
+      for(const axis of [0,2])for(const side of [-1,1]){
+        const along=2-axis;
+        patch((u,t)=>{let p=[0,0,0];p[axis]=side*half[axis];p[along]=u;p=point(p[0],p[2]);p[1]-=(axis===2&&side===-1?.025:drop)*t;const n=[0,0,0];n[axis]=side;return [p,n]},along===0?xs:zs,[0,.25,.5,.75,1]);
+      }
+    }else if(kind==='desktop'){
+      const cut=cfg.cutout??.065,xs=Array.from({length:33},(_,i)=>-half[0]+size[0]*i/32);
+      const front=x=>-half[2]+cut*(1+Math.cos(Math.PI*x/half[0]))/2;
+      for(const side of [-1,1])patch((x,t)=>[[x,side*half[1],front(x)+(half[2]-front(x))*t],[0,side,0]],xs,[0,1]);
+      patch((x,y)=>[[x,y,front(x)],normalize([-cut*Math.PI*Math.sin(Math.PI*x/half[0])/(2*half[0]),0,-1])],xs,[-half[1],half[1]]);
+      patch((x,y)=>[[x,y,half[2]],[0,0,1]],[-half[0],half[0]],[-half[1],half[1]]);
+      for(const side of [-1,1])patch((z,y)=>[[side*half[0],y,z],[side,0,0]],[-half[2],half[2]],[-half[1],half[1]]);
+    }else if(kind==='miter'){
+      const poly=cfg.outline.map(([x,z])=>[x*size[0],z*size[2]]);
+      for(let i=0;i<4;i++){
+        const a=poly[i],b=poly[(i+1)%4],dx=b[0]-a[0],dz=b[1]-a[1],n=normalize([dz,0,-dx]);
+        patch((t,y)=>[[a[0]+dx*t,y,a[1]+dz*t],n],[0,1],[-half[1],half[1]]);
+      }
+      for(const side of [-1,1])patch((u,v)=>{
+        const w=[(1-u)*(1-v),u*(1-v),u*v,(1-u)*v];
+        return [[poly.reduce((s,p,i)=>s+w[i]*p[0],0),side*half[1],poly.reduce((s,p,i)=>s+w[i]*p[1],0)],[0,side,0]];
+      },[0,1],[0,1]);
+    }else if(['rounded','pillow','bow'].includes(kind)){
       const radius=Math.min(cfg.radius??.015,...half.map(h=>h*.95));
       const grid=h=>kind!=='rounded'?Array.from({length:9},(_,i)=>h*(i-4)/4):cfg.steps===1?[-h,-h+radius,h-radius,h]:radius<=.008?[-h,-h+radius*.5,-h+radius,0,h-radius,h-radius*.5,h]:[-h,-h+radius*.3,-h+radius*.65,-h+radius,0,h-radius,h-radius*.65,h-radius*.3,h];
       for(let axis=0;axis<3;axis++){
@@ -240,6 +280,7 @@
     if (mode === 'rough' && (element.category.startsWith('finish_') || (element.category === 'ceiling' && !element.rawOnly))) return null;
     if (mode !== 'furniture' && element.category === 'furniture') return null;
     if (mode === 'rough' && element.category === 'door' && !element.name.startsWith('Door_Entry_')) return null;
+    if (mode === 'rough' && element.category === 'door_hardware') return null;
     const baseElement = element;
     if (mode !== 'rough' && element.finished) element = { ...element, ...element.finished };
     if(state.cabinetOpen&&element.towelPress)element={...element,detail:{...element.detail,press:element.towelPress}};
@@ -248,11 +289,13 @@
       const dx=element.position[0]-p[0],dz=element.position[2]-p[2],c=Math.cos(a),s=Math.sin(a);
       element={...element,position:[p[0]+dx*c+dz*s,element.position[1],p[2]-dx*s+dz*c],rotation:(element.rotation||0)+a};
     }
-    if (state.doorsClosed && element.category === "door" && element.closed) {
+    if (state.doorsClosed && ['door','door_hardware'].includes(element.category) && element.closed) {
       const rise = element.finished && element.finished.closed && mode !== 'rough' ? 0 : element.position[1] - baseElement.position[1];
       element = { ...element, ...element.closed, position: [element.closed.position[0], element.closed.position[1]+rise, element.closed.position[2]] };
     }
     if (!state.furniture && element.category === "furniture") return null;
+    // Finish panels and wall solids form continuous surfaces, not wireframe blocks.
+    if(mode!=='rough'&&['wall','finish_wall'].includes(element.category))element={...element,noEdges:true};
     if (state.cutWalls && (element.category === "window" || element.category === 'ceiling')) return null;
     if (state.cutWalls && (element.category === "wall" || element.category === "door" || element.category === 'finish_wall')) {
       const base = element.position[1] - element.size[1] / 2;
@@ -327,21 +370,42 @@
     const opaque = createBatch();
     const transparent = createBatch();
     const lines = createBatch();
+    const selected=[];
+    opaque.surface=[9,1,0,0];
+    addBox(opaque,lines,{position:[4.3,-.006,4.3],size:[50,.008,50],noEdges:true},[.88,.88,.86,1],edgeColor);
     for (const original of model.elements) {
       const element = adjustedElement(original, state);
       if (!element) continue;
       const spec = model.materials[element.material];
       if (!spec) continue;
-      const color = state.selected && element.inspectId===state.selected ?
-        spec.color.map((v,i)=>i===3?v:Math.min(1,v*.72+.23)) : spec.color;
+      const isSelected=state.selected&&element.inspectId===state.selected;
+      if(isSelected)selected.push(element);
+      const color = isSelected ? spec.color.map((v,i)=>i===3?v:v*.65+[.15,.78,1][i]*.35) : spec.color;
       const target = color[3] < 0.98 ? transparent : opaque;
       const pattern=element.category==='window'&&element.name.includes('_glass')?5:(spec.pattern||0);
       const circuit=pattern===4?(element.name.startsWith('PlanSpot_')||element.name.startsWith('PlanCentral_')?1:2):0;
       target.surface=[pattern,spec.roughness??.8,spec.metallic||0,circuit];
+      target.artwork=element.artwork?element:null;
       if (element.detail) addDetail(target, element, color);
       else if (element.shape === "cylinder") addCylinder(target, lines, element, color, edgeColor);
       else if (element.shape === "hexagon") addHexagon(target, lines, element, color, edgeColor);
       else addBox(target, lines, element, color, edgeColor);
+    }
+    opaque.artwork=null;
+    if(selected.length){
+      const lo=[Infinity,Infinity,Infinity],hi=[-Infinity,-Infinity,-Infinity];
+      for(const e of selected)for(const x of [-.5,.5])for(const y of [-.5,.5])for(const z of [-.5,.5]){
+        const p=worldPoint([x*e.size[0],y*e.size[1],z*e.size[2]],e.position,e.rotation||0);
+        p.forEach((v,i)=>{lo[i]=Math.min(lo[i],v-.012);hi[i]=Math.max(hi[i],v+.012)});
+      }
+      opaque.surface=[10,1,0,0];
+      // Short solid corner brackets stay visible on light furniture in WebGL.
+      for(const x of [0,1])for(const y of [0,1])for(const z of [0,1])for(let axis=0;axis<3;axis++){
+        const bits=[x,y,z],p=bits.map((b,i)=>b?hi[i]:lo[i]),s=[.006,.006,.006];
+        const len=Math.min(.16,(hi[axis]-lo[axis])*.25);s[axis]=len;
+        p[axis]+=(bits[axis]?-1:1)*len/2;
+        addBox(opaque,lines,{position:p,size:s,noEdges:true},[.12,.72,1,1],edgeColor);
+      }
     }
     return { opaque, transparent, lines };
   }
@@ -388,6 +452,7 @@
       uniform float uEvening;
       uniform vec3 uEye;
       uniform sampler2D uAmbientMap;
+      uniform sampler2D uArtwork;
       uniform float uDetailAmbient;
       precision highp sampler3D;
       uniform sampler3D uUpperPositive;
@@ -424,6 +489,15 @@
         return 4.0*(dot(a*a,max(n,vec3(0.0))*max(n,vec3(0.0)))+
                     dot(b*b,min(n,vec3(0.0))*min(n,vec3(0.0))));
       }
+      vec3 srgbToLinear(vec3 c) {
+        return mix(c/12.92,pow((c+vec3(.055))/1.055,vec3(2.4)),step(vec3(.04045),c));
+      }
+      vec3 eveningDisplay(vec3 linearColor) {
+        vec3 c=max(linearColor,vec3(0.0));
+        // Compress luminance uniformly to preserve material hue/chroma.
+        c/=1.0+dot(c,vec3(.2126,.7152,.0722));
+        return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-vec3(.055),step(vec3(.0031308),c));
+      }
       void main() {
         vec3 n=normalize(vNormal),p=vPosition;
         bool detailed=p.x>-.55&&p.x<9.09&&p.z>-.05&&p.z<8.79;
@@ -443,41 +517,72 @@
           texFactor=detailed ? .985+.055*aa*sin(uv.x*scale)*sin(uv.y*scale)+.014*sin(uv.x*95.0)*sin(uv.y*110.0) : 1.0+.035*aa*sin(uv.x*scale)*sin(uv.y*scale);
         } else if(vSurface.x>2.5&&vSurface.x<3.5){
           texFactor=.99+.017*sin(uv.x*12.0+sin(uv.y*15.0))+.012*sin(uv.y*71.0+sin(uv.x*33.0));
+        } else if(vSurface.x>11.5&&vSurface.x<12.5){
+          float aa=1.0-smoothstep(.005,.025,max(length(dFdx(uv)),length(dFdy(uv))));
+          float weave=sin(uv.x*780.0)*sin(uv.y*640.0);
+          texFactor=.92+.17*aa*weave+.10*grainNoise(uv*90.0)+.055*sin(uv.x*55.0)*sin(uv.y*48.0);
+        } else if(vSurface.x>7.5&&vSurface.x<8.5){
+          vec2 brick=vec2(uv.x/.26,uv.y/.075);brick.x+=mod(floor(brick.y),2.0)*.5;
+          vec2 f=fract(brick),aa=fwidth(brick);
+          float joint=1.0-smoothstep(.025,.045+max(aa.x,aa.y),min(min(f.x,1.0-f.x),min(f.y,1.0-f.y)));
+          texFactor=mix(.91+.15*grainNoise(floor(brick))+.035*grainNoise(uv*90.0),1.22,joint);
         }
-        float ao=contactAmbient(p,n);
+        float ao=mix(1.0,contactAmbient(p,n),mix(.55,.30,uEvening));
         float daylight=detailed ? .67+.13*n.y+.15*diffuse : .66+diffuse*.24;
-        vec3 lighting=mix(vec3(daylight*ao),vec3(.065,.078,.105)*mix(1.0,ao,.6),uEvening);
+        vec3 lighting=mix(vec3(daylight*ao),vec3(.004,.005,.008)*mix(1.0,ao,.6),uEvening);
         // Four filtered volume samples replace all per-pixel ray/fixture loops.
         // Static walls and both door states were baked offline once.
-        if(uEvening>.5&&uInteriorLight>.5&&uUnlit<.5&&(vSurface.x<3.5||vSurface.x>5.5)){
-          vec3 uv=(p+n*.08-uBakeOrigin)/uBakeExtent;
+        if(uInteriorLight>.5&&uUnlit<.5&&(vSurface.x<4.5||vSurface.x>5.5)){
+          // Clamp the sample away from the coarse volume's ceiling boundary.
+          // This avoids a spurious dark band where ceiling and wall meet.
+          vec3 receiver=p+n*.08;receiver.y=min(receiver.y,2.57);
+          vec3 uv=(receiver-uBakeOrigin)/uBakeExtent;
           if(all(greaterThanEqual(uv,vec3(0.0)))&&all(lessThanEqual(uv,vec3(1.0)))) {
             float energy=0.0;
-            if(uUpperLight>.5)energy+=bakedLight(uUpperPositive,uUpperNegative,uv,n);
+            if(uUpperLight>.5)energy+=bakedLight(uUpperPositive,uUpperNegative,uv,n)*mix(1.0,.75,uEvening);
             if(uSmallLight>.5)energy+=bakedLight(uSmallPositive,uSmallNegative,uv,n);
-            lighting+=vec3(1.0,.94,.85)*energy;
+            lighting+=vec3(1.0,.94,.85)*energy*mix(.28,ao,uEvening);
           }
         }
         vec3 halfway=normalize(lightDirection+normalize(uEye-p));
         float fresnel=.04+.20*pow(1.0-max(dot(n,normalize(uEye-p)),0.0),5.0);
-        float spec=pow(max(dot(n,halfway),0.0),mix(100.0,8.0,vSurface.y))*(.12*vSurface.z+fresnel*(1.0-vSurface.y))*(1.0-uEvening*.92);
-        vec3 rgb=vColor.rgb*texFactor*lighting+vec3(spec);
+        bool photo=vSurface.x>6.5&&vSurface.x<7.5;
+        float rough=photo?.9:vSurface.y,metal=photo?0.0:vSurface.z;
+        float spec=pow(max(dot(n,halfway),0.0),mix(100.0,8.0,rough))*(.12*metal+fresnel*(1.0-rough))*(1.0-uEvening*.92);
+        // Palette values are display-space sRGB. Decode before multiplying by
+        // linear irradiance; applying output gamma directly to palette values
+        // was lifting blacks and washing out wood and coloured materials.
+        vec3 base=photo?texture(uArtwork,vSurface.yz).rgb*vColor.rgb:vColor.rgb;
+        if(vSurface.x>7.5&&vSurface.x<8.5&&n.y>.5){base=vec3(.95,.945,.93);texFactor=1.0;}
+        vec3 albedo=uEvening>.5?srgbToLinear(base):base;
+        vec3 rgb=albedo*texFactor*lighting+vec3(spec*(1.0-uEvening));
         if(vSurface.x>3.5&&vSurface.x<4.5){
           float enabled=vSurface.w<1.5?uUpperLight:uSmallLight;
-          rgb=vColor.rgb*mix(.80,mix(.10,1.0,enabled),uEvening);
+          // Unpowered opal diffusers remain ordinary light-coloured surfaces.
+          // Room lighting still illuminates them; only emission switches off.
+          rgb=enabled>.5?vColor.rgb:albedo*lighting;
+          if(enabled<.5&&uEvening>.5)rgb=eveningDisplay(rgb);
         }
-        if(vSurface.x>5.5){ // A neutral mirror proxy, not a rendered reflection.
+        if(vSurface.x>5.5&&vSurface.x<6.5){ // A neutral mirror proxy, not a rendered reflection.
           rgb*=.85+.15*smoothstep(.8,2.2,p.y);
         }
-        // Smooth highlight shoulder preserves ivory/stone detail near luminaires.
-        if(vSurface.x<3.5||vSurface.x>5.5)
-          rgb=min(rgb,vec3(.6))+.4*(1.0-exp(-max(rgb-vec3(.6),vec3(0.0))/.4));
+        // Evening irradiance is linear. Compress highlights then convert to
+        // display space so white diffuse ceilings retain detail without bloom.
+        // Keep the established daytime appearance unchanged.
+        if(vSurface.x<3.5||vSurface.x>5.5){
+          if(uEvening>.5)rgb=eveningDisplay(rgb);
+          else rgb=min(rgb,vec3(.6))+.4*(1.0-exp(-max(rgb-vec3(.6),vec3(0.0))/.4));
+        }
         float alpha=vColor.a;
         if(vSurface.x>4.5&&vSurface.x<5.5){
           rgb=mix(rgb,vec3(.025,.039,.070)+vec3(.015,.018,.021)*max(n.y,0.0),uEvening);
-          alpha=mix(alpha,1.0,uEvening);
+          // Both sides transmit the already-rendered lit interior at night.
+          // Retain a subtle reflection tint rather than an opaque night pane.
+          alpha=mix(alpha,.12,uEvening);
         }
         outColor=vec4(mix(rgb,vColor.rgb*mix(1.0,.28,uEvening),uUnlit),alpha);
+        if(vSurface.x>8.5&&vSurface.x<9.5)outColor=vec4(mix(vec3(.87,.87,.845),vec3(.051,.057,.067),uEvening),1.0);
+        if(vSurface.x>9.5&&vSurface.x<10.5)outColor=vec4(vColor.rgb,1.0);
       }`;
     const program = gl.createProgram();
     gl.attachShader(program, compileShader(gl, gl.VERTEX_SHADER, vertexSource));
@@ -607,6 +712,15 @@
       const eyeLocation=gl.getUniformLocation(program,"uEye");
       const ambientLocation=gl.getUniformLocation(program,"uDetailAmbient");
       const ambientSamplerLocation=gl.getUniformLocation(program,'uAmbientMap');
+      const artworkLocation=gl.getUniformLocation(program,'uArtwork');
+      const artworkTexture=gl.createTexture();
+      gl.activeTexture(gl.TEXTURE0+5);gl.bindTexture(gl.TEXTURE_2D,artworkTexture);
+      const art=model.artwork,artPixels=art?Uint8Array.from(atob(art.pixels),c=>c.charCodeAt(0)):new Uint8Array([220,220,215]);
+      gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
+      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB8,art?.width||1,art?.height||1,0,gl.RGB,gl.UNSIGNED_BYTE,artPixels);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
       const ambientTexture=gl.createTexture();
       gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,ambientTexture);
       const ambient=model.detailAmbient;
@@ -641,7 +755,18 @@
         ['uUpperPositive','uUpperNegative','uSmallPositive','uSmallNegative'].forEach((name,i)=>gl.uniform1i(lightLocations[name],i+1));
         gl.activeTexture(gl.TEXTURE0);
       }
-      const state = { cutWalls: true, cutHeight: 1.35, furniture: true, doorsClosed: false, mode: 'furniture', evening:false, upperLight:true,smallLight:true,cabinetOpen:false,towelsVisible:true };
+      const state = { cutWalls: true, cutHeight: 1.35, furniture: true, doorsClosed: false, mode: 'furniture', evening:false, upperLight:false,smallLight:false,cabinetOpen:false,towelsVisible:true };
+      const lightScenarios={day:[false,false],evening:[true,true]};
+      const floorColliders=model.elements.filter(e=>e.name.startsWith('Finish_Floor')).map(e=>({...e,...e.finished}));
+      function clampCameraFloor(){
+        let minimum=.10;
+        for(const floor of floorColliders){
+          const p=floor.position,s=floor.size;
+          if(Math.abs(camera.eye[0]-p[0])<=s[0]/2&&Math.abs(camera.eye[2]-p[2])<=s[2]/2)
+            minimum=Math.max(minimum,(state.mode==='rough'?0:p[1]+s[1]/2+.0004)+.12);
+        }
+        camera.eye[1]=Math.max(minimum,camera.eye[1]);
+      }
       let lastLightingKey=null;
       const camera = { yaw: 1.02, pitch: 1.02, distance: 17.5, target: [4.25, 0.58, 4.65], top: false };
       camera.eye = [
@@ -668,7 +793,7 @@
         state.selected=id||null;
         if(objectSelect)objectSelect.value=id||'';
         const item=(model.objects||[]).find(x=>x.id===id);
-        if(inspection)inspection.textContent=item ? `${item.label} · модель Ш × Г × В: ${item.dimensionsMm.join(' × ')} мм. ${item.pdf?'PDF: '+item.pdf+'. ':'Размеры в PDF не подписаны. '}${item.note}` : 'Нажмите на предмет, чтобы увидеть размеры.';
+        if(inspection)inspection.textContent=item ? `${item.label} · Ш × Г × В: ${item.dimensionsMm.join(' × ')} мм` : 'Нажмите на предмет, чтобы увидеть размеры.';
         if(cabinetButton){
           cabinetButton.hidden=id!=='bath-cabinet'||state.mode!=='furniture';
           cabinetButton.textContent=state.cabinetOpen?'Закрыть пенал':'Открыть пенал';
@@ -707,14 +832,14 @@
         const tilt = Number(heldKeys.has('ArrowDown'))-Number(heldKeys.has('ArrowUp'));
         const turn = Number(heldKeys.has('ArrowRight'))-Number(heldKeys.has('ArrowLeft'));
         const length = Math.hypot(side,forward) || 1;
-        const step = 1.8*dt/length;
+        const step = 2.5*dt/length;
         if (camera.top) {
           camera.target[0] += side*step; camera.target[2] -= forward*step;
         } else {
           camera.yaw += turn*1.2*dt;
           camera.pitch=Math.max(-1.53,Math.min(1.53,camera.pitch+tilt*1.0*dt));
           // Height is the world-up axis (Y in this renderer), independent of gaze.
-          camera.eye[1] += vertical*1.8*dt;
+          camera.eye[1] += vertical*2.5*dt;
           camera.eye[0] += (side*Math.sin(camera.yaw)-forward*Math.cos(camera.yaw))*step;
           camera.eye[2] += (-side*Math.cos(camera.yaw)-forward*Math.sin(camera.yaw))*step;
         }
@@ -761,6 +886,7 @@
       function render(timestamp = 0) {
         framePending = false;
         moveWithKeys(timestamp);
+        clampCameraFloor();
         resize();
         const cosPitch = Math.cos(camera.pitch);
         // Free look: only the viewing direction changes during a mouse drag.
@@ -782,18 +908,19 @@
         const viewProjection = multiply(projection, view);
         lastViewProjection=viewProjection;
 
-        gl.clearColor(...(state.evening?[.018,.026,.045,1]:[.92,.92,.90,1]));
+        gl.clearColor(...(state.evening?[18/255,20/255,23/255,1]:[235/255,235/255,230/255,1]));
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.CULL_FACE);
         gl.cullFace(gl.BACK);
         gl.useProgram(program);
         gl.uniform1i(ambientSamplerLocation,0);
+        gl.uniform1i(artworkLocation,5);
         ['uUpperPositive','uUpperNegative','uSmallPositive','uSmallNegative'].forEach((name,i)=>gl.uniform1i(lightLocations[name],i+1));
         gl.uniform1f(ambientLocation,ambient&&state.mode==='furniture'?1:0);
         gl.uniformMatrix4fv(matrixLocation, false, viewProjection);
         gl.uniform3fv(eyeLocation,camera.eye);
-        const localLights=state.evening&&state.mode==='furniture';
+        const localLights=state.mode==='furniture'&&(state.upperLight||state.smallLight);
         gl.uniform1f(interiorLightLocation,localLights?1:0);
         gl.uniform1f(eveningLocation,state.evening?1:0);
         gl.uniform1f(lightLocations.uUpperLight,localLights&&state.upperLight?1:0);
@@ -832,8 +959,9 @@
 
       function updateControls() {
         root.dataset.evening=String(state.evening);
+        document.documentElement.setAttribute('data-apartment-theme',state.evening?'evening':'day');
         if(eveningButton)eveningButton.setAttribute('aria-pressed',String(state.evening));
-        if(lightControls)lightControls.hidden=!state.evening;
+        if(lightControls)lightControls.hidden=false;
         if(upperButton)upperButton.setAttribute('aria-pressed',String(state.upperLight));
         if(smallButton)smallButton.setAttribute('aria-pressed',String(state.smallLight));
         wallsButton.textContent = state.cutWalls ? "Срез стен" : "Полные стены";
@@ -933,7 +1061,10 @@
         updateControls();rebuild();live.textContent='Ванная: простенок между дверным наличником и пеналом, примерка узкого вертикального полотенцесушителя.';
       });
       if(eveningButton)eveningButton.addEventListener('click',function(){
-        state.evening=!state.evening;updateControls();requestRender();
+        lightScenarios[state.evening?'evening':'day']=[state.upperLight,state.smallLight];
+        state.evening=!state.evening;
+        [state.upperLight,state.smallLight]=lightScenarios[state.evening?'evening':'day'];
+        updateControls();requestRender();
         live.textContent=state.evening?'Вечер: за окнами темно. Свет включён в режиме «Мебель»; оценка освещения приблизительная.':'Дневное освещение восстановлено.';
       });
       for(const [button,key] of [[upperButton,'upperLight'],[smallButton,'smallLight']])if(button)button.addEventListener('click',()=>{

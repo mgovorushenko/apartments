@@ -2,7 +2,11 @@
 from collections import Counter
 import math
 import generate_model as m
+import finish_review
+finish_review.build=lambda api:None  # Isolate the earlier stage; current full scene has dedicated regression coverage.
 import scene_lighting
+import detail_refinement
+detail_refinement.build=lambda api:None  # Test registration before later fixture replacement.
 from lighting_plan import position,inverse,SPOTS
 
 build=scene_lighting.build

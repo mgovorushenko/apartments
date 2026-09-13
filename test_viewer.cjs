@@ -19,7 +19,7 @@ function test(width,dark){
   root.contains=target=>target===root || Object.values(nodes).includes(target);
   const gl=new Proxy({
     getShaderParameter:()=>true,getProgramParameter:()=>true,
-    texImage2D:(_t,_l,_f,w,h,_b,_format,_type,pixels)=>{textureUploads++;assert.equal(pixels.length,w*h)},
+    texImage2D:(_t,_l,_f,w,h,_b,_format,_type,pixels)=>{textureUploads++;assert.equal(pixels.length,w*h*(_format==='RGB'?3:1))},
     texImage3D:(_t,_l,_f,w,h,d,_b,_format,_type,pixels)=>{assert.equal(pixels.length,w*h*d*3);if(w>1)volumeUploads++},
     shaderSource:(_,s)=>shaders.push(s),getUniformLocation:(_,s)=>s,
     uniform1f:(key,v)=>uniforms[key]=v,uniform1i:(key,v)=>uniforms[key]=v,
@@ -32,7 +32,7 @@ function test(width,dark){
   nodes.canvas.getContext=type=>{assert.equal(type,'webgl2');return gl};
   nodes.canvas.clientWidth=width;nodes.canvas.clientHeight=nodes['.apt-stage'].getBoundingClientRect().height;
   const win={listeners:{},addEventListener(n,f){this.listeners[n]=f},devicePixelRatio:1,requestAnimationFrame:fn=>callbacks.push(fn),matchMedia:()=>({addEventListener(){}})};
-  const document={listeners:{},addEventListener(n,f){this.listeners[n]=f},hidden:false,getElementById:id=>{assert.equal(id,'apartment-3d-root');return root},createElement:element,documentElement:{},body:{}};
+  const document={listeners:{},addEventListener(n,f){this.listeners[n]=f},hidden:false,getElementById:id=>{assert.equal(id,'apartment-3d-root');return root},createElement:element,documentElement:element(),body:{}};
   const context=vm.createContext({window:win,document,console,Float32Array,Uint8Array,atob,ResizeObserver:class{observe(){}},MutationObserver:class{observe(){}},
     getComputedStyle:()=>({color:dark?'rgb(230,230,230)':'rgb(30,30,30)'})});
   vm.runInContext(dataCode,context);
@@ -48,7 +48,7 @@ function test(width,dark){
   function flush(){let n=0;while(callbacks.length){assert(++n<10);callbacks.shift()()}assert.equal(nodes['.apt-error'].textContent,'');}
   const click=action=>{nodes[`[data-action="${action}"]`].listeners.click();flush()};
   flush();assert(draws.length>0);assert.equal(nodes.canvas.width,width);
-  assert.equal(textureUploads,1,'contact atlas uploads exactly once');
+  assert.equal(textureUploads,2,'contact and photographic art textures each upload once');
   const immutableScene=JSON.stringify(win.APARTMENT_SCENE);
   // Solve the three clip planes x=y=w=0 to recover the perspective camera eye.
   function eyeFromMatrix(m){
@@ -141,7 +141,7 @@ function test(width,dark){
     tick(2000);tick(2050);release(code);flush();
     const after=eyeFromMatrix(matrices.at(-1));
     close(after[0],eye[0]);close(after[2],eye[2]);
-    close(after[1]-eye[1],sign*1.8*(1/60+.05));
+    close(after[1]-eye[1],sign*2.5*(1/60+.05));
     for(const i of [0,1,2,3,4,5,6,7,8,9,10,11])close(matrices.at(-1)[i],prior[i]);
   }
   for(const code of ['ArrowUp','ArrowDown']){
@@ -257,7 +257,22 @@ function test(width,dark){
   assert.equal(uniforms.uInteriorLight,0);assert.equal(uniforms.uUpperLight,0);assert.equal(uniforms.uSmallLight,0);
   const disabledUploads=lightArrayUploads;click('bathroom');click('reset');
   assert.equal(lightArrayUploads,disabledUploads,'day navigation keeps expensive lighting disabled');
-  assert.equal(textureUploads,1,'camera, selection, modes, doors and evening reuse baked texture');
+  assert.equal(document.documentElement.attrs['data-apartment-theme'],'day');
+  assert.equal(nodes['.apt-light-controls'].hidden,false,'day circuits remain accessible');
+  const beforeDayLights=uploads.length;
+  click('small-light');assert.equal(uniforms.uSmallLight,1);assert.equal(uniforms.uInteriorLight,1);
+  click('upper-light');assert.equal(uniforms.uUpperLight,1);
+  assert.equal(volumeUploads,8,'day lights reuse existing textures');
+  assert.equal(uploads.length,beforeDayLights,'day circuits never rebuild geometry');
+  click('evening');assert.equal(document.documentElement.attrs['data-apartment-theme'],'evening');
+  click('small-light');click('evening');assert.equal(uniforms.uSmallLight,1,'day scenario survives evening edits');
+  click('upper-light');click('small-light');
+  click('kitchen');const beforeFloor=uploads.length;
+  key('ShiftLeft');for(let t=10000;t<=11200;t+=50)tick(t);release('ShiftLeft');flush();
+  close(eyeFromMatrix(matrices.at(-1))[1],.138);
+  assert.equal(uploads.length,beforeFloor,'floor collision does not rebuild geometry');
+  click('reset');
+  assert.equal(textureUploads,2,'camera, selection, modes, doors and evening reuse both 2D textures');
   assert.equal(root.dataset.error,undefined);
   nodes['[data-action="object"]'].value='bath-cabinet';nodes['[data-action="object"]'].listeners.change();flush();
   assert.equal(nodes['[data-action="cabinet"]'].hidden,false);

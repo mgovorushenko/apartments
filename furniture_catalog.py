@@ -11,6 +11,10 @@ SOURCE = '07-08 План расстановки мебели 4.pdf · лист 8
 def build(api):
     # Longest/specific prefixes first; accessories share their parent's selection.
     specs=[
+        ('study-art','Картина',('StudyArt',),0,None),
+        ('memo-board','Пробковая доска',('EntryMemo',),math.pi/2,None),
+        ('pet-feeding','Миски на подставке',('PetFeeding',),0,None),
+        ('bath-shelves','Полочки',('BathShelf_',),math.pi/2,None),
         ('study-central','Центральный светильник кабинета',('PlanCentral_',),0,None),
         ('study-sconce','Бра кабинета',('StudySconce_',),0,None),
         ('entry-mirror','Зеркало с подсветкой в прихожей',('EntryMirror_',),0,None),
@@ -45,18 +49,27 @@ def build(api):
         ('basin','Тумба с раковиной',('Basin','BathroomVanity'),math.pi/2,'Ширина тумбы 700 мм'),
         ('toilet','Инсталляция и подвесной унитаз',('Toilet',),math.pi/2,None),
         ('shower','Душевой комплект',('Shower','BathShowerNozzle'),math.pi/2,None),
-        ('bath','Ванна',('BathBase','BathWest','BathEast','BathNorth','BathSouth','BathInner','BathDrain','BathOverflow'),0,'1800 × 750 мм в плане'),
+        ('bath','Ванна',('BathBase','BathWest','BathEast','BathNorth','BathSouth','BathInner','BathDrain','BathOverflow','BathApron'),0,'1800 × 750 мм в плане'),
         ('tv-console','Тумба под ТВ',('TVConsole',),math.pi/2,'Длина 1500 мм'),
         ('tv','Телевизор',('TV_',),math.pi/2,None),
         ('kitchen-ac','Кондиционер кухни',('KitchenAC',),math.pi/2,None),
         ('kitchen-sofa','Диван кухни',('KitchenSofa',),math.pi/2,'Длина 1500 мм'),
         ('table','Обеденный стол',('DiningTable','Furniture_DiningTable'),0,'Круглый, Ø900 мм'),
         ('coffee-table','Журнальный стол кухни',('Furniture_CoffeeTable',),0,None),
-        ('dog-bed','Лежанка с собакой',('Dog',),0,None),
-        ('pet-feeding','Собачьи миски на коврике',('PetFeeding',),0,None),
+        ('dog-bed','Лежанка',('DogBed',),0,None),
+        ('pet-feeding','Металлические миски на подставке',('PetFeeding',),0,None),
+        ('entry-router','Wi-Fi роутер',('EntryRouter',),0,None),
+        ('entry-panel','Распределительный щиток',('EntryElectricalPanel',),0,None),
         ('study-sofa','Диван кабинета',('StudySofa',),0,'Длина 2000 мм'),
         ('study-shelf','Стеллаж кабинета',('StudyOpenShelf','StudyShelfBook'),0,'Ширина 700 мм'),
-        ('desk','Рабочий стол',('ComputerDesk','DeskLeg','Keyboard'),0,'1400 × 600 мм в плане'),
+        ('desk','Рабочий стол',('ComputerDesk','DeskLeg'),0,'1400 × 600 мм в плане; форма выемки условная'),
+        ('study-pc','Системный блок',('StudyPC_',),0,'Компактный корпус: примерка 190 × 400 × 360 мм'),
+        ('study-keyboard','Клавиатура',('StudyKeyboard_',),0,None),
+        ('study-mouse','Мышь и коврик',('StudyMouse',),0,None),
+        ('study-cables','Кабельный лоток',('StudyCable_',),0,None),
+        ('study-rug','Ковёр кабинета',('StudyRug',),0,'2150 × 1250 мм · примерка'),
+        ('study-blind-west','Рулонная штора у стола',('StudyBlind_StudyWest_',),math.pi/2,None),
+        ('study-blind-south','Рулонная штора кабинета',('StudyBlind_StudySouth_',),0,None),
         ('monitor1','Первый монитор',('Monitor1',),0,None),
         ('monitor2','Второй монитор',('Monitor2',),0,None),
         ('study-chair','Рабочее кресло',('Furniture_Study',),0,None),
@@ -107,6 +120,7 @@ def build(api):
                  'desk':'ComputerDesk_001','kitchen-sofa':'KitchenSofa_Base_','study-sofa':'StudySofa_Base_',
                  'sink-unit':'SinkUnit_001','dishwasher':'Dishwasher_001','oven':'OvenUnit_001','end-unit':'EndUnit_001','corner':'KettleCorner_001'}
         dimension_members=[e for e in members if e['name'].startswith(nominal[ident])] if ident in nominal else [e for e in members if '_Handle_' not in e['name']]
+        if ident=='bath':dimension_members += [e for e in api.ELEMENTS if e['name'].startswith('BathApronLip_')]
         for original in dimension_members or members:
             e=api.resolved(original);x,y,z=e['position'];sx,sy,sz=e['size'];a=e.get('rotation',0)
             for u in (-sx/2,sx/2):

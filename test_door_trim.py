@@ -15,6 +15,12 @@ for room in ('Bedroom','Study','Bathroom'):
     lo,hi=edge(jambs[0],along,1),edge(jambs[1],along,-1)
     for side,sign in [('A',-1),('B',1)]:
         parts={part:next(e for e in trims if e['name'].startswith(f'DoorCasing_{room}_{side}_{part}_')) for part in ('Left','Right','Top')}
+        if room=='Study' and side=='A':
+            assert parts['Left'].get('cornerReturn') and parts['Top'].get('cornerReturn')
+            for e in parts.values():
+                for wall in elements:
+                    if wall['category']=='wall':assert not all(min(edge(e,a,1),edge(wall,a,1))-max(edge(e,a,-1),edge(wall,a,-1))>1e-6 for a in range(3)),(e['name'],wall['name'])
+            continue
         near(edge(parts['Left'],along,1),lo);near(edge(parts['Right'],along,-1),hi)
         near(edge(parts['Top'],1,-1),edge(head,1,-1))
         for part,e in parts.items():

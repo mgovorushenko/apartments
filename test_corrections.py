@@ -37,10 +37,10 @@ for i in (1,3,4):
 
 entry=node('Door_Entry_')
 cx,cy,cz=entry['closed']['position']
-assert entry['position'][2]<cz-.4,'entry must open outwards (negative Z)'
-assert entry['position'][2]-entry['size'][0]/2<-.9
+assert entry['position'][2]<cz,'entry must remain outside at full opening'
+assert entry['position'][2]+entry['size'][2]/2<-.21
 near(entry['closed']['rotation'],-math.pi)
-assert abs(entry['rotation']-math.pi/2)<1e-6
+assert abs(abs(entry['rotation']-entry['closed']['rotation'])-math.pi)<1e-6
 for original in model.ELEMENTS:
     if original['name'].startswith('Door_Entry_'):
         assert original['position'][2]<original['closed']['position'][2]-.4

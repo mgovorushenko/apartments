@@ -872,14 +872,17 @@
         414
       ],
       "position": [
-        6.185,
-        1.51,
+        6.08,
+        1.4489999999999998,
         6.777526315789474
       ],
       "elements": [
-        "KitchenSconce_Plate_001",
-        "KitchenSconce_Arm_001",
-        "KitchenSconce_Shade_001"
+        "KitchenSconce_Plate_002",
+        "KitchenSconce_Arm_002",
+        "KitchenSconce_Shade_002",
+        "KitchenSconce_Rim_001",
+        "KitchenSconce_Diffuser_001",
+        "KitchenSconce_Switch_001"
       ],
       "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
     },
@@ -893,15 +896,16 @@
       ],
       "position": [
         0.7738010038610038,
-        1.397,
-        2.916656626506024
+        1.517,
+        2.848
       ],
       "elements": [
         "BedsideLeft_LightBackplate_001",
         "BedsideLeft_LightArm_001",
         "BedsideLeft_LightShade_001",
         "BedsideLeft_LightRim_001",
-        "BedsideLeft_LightDiffuser_001"
+        "BedsideLeft_LightDiffuser_001",
+        "BedsideLeft_LightSwitch_001"
       ],
       "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
     },
@@ -915,15 +919,16 @@
       ],
       "position": [
         3.275569340206186,
-        1.397,
-        2.916656626506024
+        1.517,
+        2.848
       ],
       "elements": [
         "BedsideRight_LightBackplate_001",
         "BedsideRight_LightArm_001",
         "BedsideRight_LightShade_001",
         "BedsideRight_LightRim_001",
-        "BedsideRight_LightDiffuser_001"
+        "BedsideRight_LightDiffuser_001",
+        "BedsideRight_LightSwitch_001"
       ],
       "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
     },
@@ -937,13 +942,16 @@
       ],
       "position": [
         2.7913498350515464,
-        1.6,
-        5.984999999999999
+        1.539,
+        5.859
       ],
       "elements": [
-        "StudySconce_Plate_001",
-        "StudySconce_Arm_001",
-        "StudySconce_Shade_001"
+        "StudySconce_Plate_002",
+        "StudySconce_Arm_002",
+        "StudySconce_Shade_002",
+        "StudySconce_Rim_001",
+        "StudySconce_Diffuser_001",
+        "StudySconce_Switch_001"
       ],
       "placement": "Пропорционально схеме; отметки высоты и габариты светильников условные"
     },

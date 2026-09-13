@@ -31,6 +31,20 @@ def build(api):
                             'door_ivory',p[0],p[2],s[0],s[2],height,base=bottom,category='finish_wall')
                 trims.append(api.ELEMENTS[-1])
 
+    # Hall side meets the perpendicular bedroom nib. Return the left casing
+    # around that corner instead of embedding it in the nib. Study side keeps
+    # the regular three-piece surround and the complete clear door width.
+    nib=api.resolved(next(e for e in api.ELEMENTS if e['name'].startswith('Wall_BedroomEastNib_')))
+    face=edge(nib,0,1)+api.FINISH_SETTINGS['plaster_wallpaper']
+    for e in trims:
+        if e['name'].startswith('DoorCasing_Study_A_Left_'):
+            z=e['position'][2]
+            e['position'][0]=face+depth/2;e['position'][2]=z-width/2+depth/2
+            e['size'][0]=depth;e['size'][2]=width;e['cornerReturn']=True
+        elif e['name'].startswith('DoorCasing_Study_A_Top_'):
+            hi=edge(e,0,1);lo=face
+            e['position'][0]=(lo+hi)/2;e['size'][0]=hi-lo;e['cornerReturn']=True
+
     # Butt the thin skirting against the vertical casings instead of running
     # through them. Only skirting geometry is shortened; walls stay unchanged.
     for e in list(api.ELEMENTS):

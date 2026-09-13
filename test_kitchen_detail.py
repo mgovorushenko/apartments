@@ -5,6 +5,8 @@ import json
 import math
 from pathlib import Path
 import generate_model as m
+import finish_review
+finish_review.build=lambda api:None  # Isolate the earlier stage; current full scene has dedicated regression coverage.
 import kitchen_detail
 from detail_geometry import mesh
 
@@ -38,7 +40,7 @@ for e in after.values():
     assert all(0<=i<len(p)//3 for i in indices)
     for i in range(0,len(n),3):assert abs(math.hypot(*n[i:i+3])-1)<1e-7,e['name']
     triangles+=len(indices)//3
-assert types=={'rounded','pillow','bow','lathe','curtain','rod','leaf','towel'}
+assert types=={'rounded','pillow','bow','lathe','curtain','rod','leaf','towel','miter','desktop','coverlet'}
 assert triangles<230000,triangles
 ambient=m.scene_data()['detailAmbient'];pixels=base64.b64decode(ambient['pixels'])
 assert len(pixels)==ambient['width']*ambient['height']==131072

@@ -1,5 +1,9 @@
 """Readable cabinet geometry without changes to the approved carcass envelopes."""
 import generate_model as model
+import finish_review
+finish_review.build=lambda api:None  # Isolate the earlier stage; current full scene has dedicated regression coverage.
+import detail_refinement
+detail_refinement.build=lambda api:None  # Original cabinet stage; new fronts have their own test.
 
 model.build_scene()
 items=[model.resolved(e) for e in model.ELEMENTS]
@@ -28,8 +32,9 @@ assert catalog['hall-wardrobe']['dimensionsMm'][:2]==[1350,600]
 assert catalog['entry-shoes']['dimensionsMm']==[750,600,2500]
 assert catalog['bath-cabinet']['dimensionsMm'][2]==2729
 assert not any(e['name'].startswith('EntryShoe') for e in items)
-for suffix in ('Rail_','Hanger_','JacketBody_','Sleeve_','Collar_','Pocket_','Bench_','ShoeUpper_','TopBasket_'):
+for suffix in ('Rail_','Hanger_','JacketBody_','Sleeve_','Collar_','Pocket_','Bench_','ShoeUpper_'):
     assert any(e['name'].startswith('EntryCoat'+suffix) for e in items),suffix
+assert any(e['name'].startswith('EntryRouter_Body') for e in items)
 for e in [e for e in items if e['name'].startswith('EntryCoat')]:
     assert e.get('inspectId')=='entry-shoes'
     assert 5.5649<=edge(e,0,-1)<edge(e,0,1)<=6.1651

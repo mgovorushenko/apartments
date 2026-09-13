@@ -31,7 +31,52 @@ def mesh(e):
                 cross=[ab[1]*ac[2]-ab[2]*ac[1],ab[2]*ac[0]-ab[0]*ac[2],ab[0]*ac[1]-ab[1]*ac[0]]
                 sign=winding if winding is not None else sum(cross[k]*normals[a*3+k] for k in range(3))
                 indices.extend([a,b,c,a,c,d] if sign>=0 else [a,c,b,a,d,c])
-    if kind in ('rounded','pillow','bow'):
+    if kind=='coverlet':
+        top=cfg.get('top',.14);drop=cfg.get('drop',.32);rise=cfg.get('pillowRise',.105)
+        def point(x,z):
+            bumps=sum(math.exp(-((x-sign*size[0]*.23)/(.24*size[0]))**4) for sign in (-1,1))
+            pillow=rise*min(1,bumps)*math.exp(-((z+size[2]*.34)/.23)**4)
+            ripple=.002*math.sin(x*24+z*8)*math.sin(z*13)
+            return [x,top+pillow+ripple,z]
+        def normal(x,z):
+            eps=.00001
+            dx=(point(x+eps,z)[1]-point(x-eps,z)[1])/(2*eps)
+            dz=(point(x,z+eps)[1]-point(x,z-eps)[1])/(2*eps)
+            return norm([-dx,1,-dz])
+        xs=[-half[0]+size[0]*i/32 for i in range(33)]
+        zs=[-half[2]+size[2]*i/40 for i in range(41)]
+        patch(lambda x,z:(point(x,z),normal(x,z)),xs,zs)
+        for axis in (0,2):
+            along=2-axis
+            for side in (-1,1):
+                def drape(u,t):
+                    p=[0,0,0];p[axis]=side*half[axis];p[along]=u
+                    p=point(p[0],p[2]);p[1]-=(.025 if axis==2 and side==-1 else drop)*t
+                    n=[0,0,0];n[axis]=side
+                    return p,n
+                patch(drape,xs if along==0 else zs,[0,.25,.5,.75,1])
+    elif kind=='desktop':
+        cut=cfg.get('cutout',.065)
+        xs=[-half[0]+size[0]*i/32 for i in range(33)]
+        def front(x):
+            return -half[2]+cut*(1+math.cos(math.pi*x/half[0]))/2
+        for side in (-1,1):
+            patch(lambda x,t:([x,side*half[1],front(x)+(half[2]-front(x))*t],[0,side,0]),xs,[0,1])
+        patch(lambda x,y:([x,y,front(x)],norm([-cut*math.pi*math.sin(math.pi*x/half[0])/(2*half[0]),0,-1])),xs,[-half[1],half[1]])
+        patch(lambda x,y:([x,y,half[2]],[0,0,1]),[-half[0],half[0]],[-half[1],half[1]])
+        for side in (-1,1):
+            patch(lambda z,y:([side*half[0],y,z],[side,0,0]),[-half[2],half[2]],[-half[1],half[1]])
+    elif kind=='miter':
+        poly=[[x*size[0],z*size[2]] for x,z in cfg['outline']]
+        for i,a in enumerate(poly):
+            b=poly[(i+1)%4];dx,dz=b[0]-a[0],b[1]-a[1];normal=norm([dz,0,-dx])
+            patch(lambda t,y:([a[0]+dx*t,y,a[1]+dz*t],normal),[0,1],[-half[1],half[1]])
+        for side in (-1,1):
+            def cap(u,v):
+                weights=[(1-u)*(1-v),u*(1-v),u*v,(1-u)*v]
+                return [sum(w*p[0] for w,p in zip(weights,poly)),side*half[1],sum(w*p[1] for w,p in zip(weights,poly))],[0,side,0]
+            patch(cap,[0,1],[0,1])
+    elif kind in ('rounded','pillow','bow'):
         radius=min(cfg.get('radius',.015),min(half)*.95)
         for axis in range(3):
             along=[i for i in range(3) if i!=axis]

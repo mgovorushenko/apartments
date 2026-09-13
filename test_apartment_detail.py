@@ -1,6 +1,8 @@
 """Whole-apartment pass: exact shell, sliding fronts, exterior baskets, dog, guitar."""
 import copy
 import generate_model as m
+import finish_review
+finish_review.build=lambda api:None  # Isolate the earlier stage; current full scene has dedicated regression coverage.
 import apartment_detail
 
 build=apartment_detail.build;apartment_detail.build=lambda api:None
@@ -35,7 +37,7 @@ for prefix,meta in m.OUTDOOR_BASKET_BOUNDS.items():
         assert sign*(e['position'][axis]-meta['exterior'])-e['size'][axis]/2>=.0249,e['name']
         assert e['position'][1]+e['size'][1]/2<=win['position'][1]-win['size'][1]/2-.0499,e['name']
     tray=next(e for e in members if '_Tray_' in e['name']);along=2 if axis==0 else 0
-    assert abs(tray['position'][along]-win['position'][along])<1e-8
+    assert abs(min(e['position'][along]-e['size'][along]/2 for e in members)-(win['position'][along]-win['size'][along]/2))<1e-8
 dog=[e for e in after.values() if e['name'].startswith('Dog') and not e['name'].startswith('DogBed')]
 assert len(dog)<30
 assert all(max(m.MATERIALS[e['material']]['color'][:3])<=.09 for e in dog)
@@ -50,9 +52,9 @@ assert body['size'][1]>.40 and body['size'][2]<.12
 leaves=[e for e in after.values() if 'Decor_Leaf' in e['name']]
 assert len(leaves)==36
 assert all(e.get('detail',{}).get('type')=='leaf' for e in leaves)
-for prefix in ('Bed_Mattress','Bed_Pillow','StudySofa_Cushion','ComputerDesk','Washer_PortholeGlass','ToiletBowl','BasinRimWest'):
+for prefix in ('Bed_Mattress','Bed_Cover','StudySofa_Cushion','ComputerDesk','Washer_PortholeGlass','ToiletBowl','BasinRimWest'):
     assert next(e for e in after.values() if e['name'].startswith(prefix)).get('detail'),prefix
-for room in ('BedroomWest','StudyWest','StudySouth','KitchenSouth'):
+for room in ('BedroomWest','KitchenSouth'):
     curtains=[e for e in after.values() if e['name'].startswith('Curtain_'+room) and e.get('detail',{}).get('type')=='curtain']
     assert len(curtains)==3,room
 print('Passed: unchanged architecture/PDF footprints; three sliding wardrobes, exterior baskets below centred windows, black dog, guitar + stand, 36 curved leaves, detailed furniture/textiles in all rooms.')

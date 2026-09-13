@@ -54,7 +54,7 @@ def build(api):
             if e['name'].startswith(prefix+'_Light'):
                 r=api.resolved(e);p=list(r['position']);p[0]+=x-original['position'][0];put(e,position=p)
         shade=api.resolved(node(prefix+'_LightDiffuser_'));p=list(shade['position']);p[1]-=.025
-        ident='sconce-'+prefix.lower();light(p,.22,prefix,fixture=ident)
+        ident='sconce-'+prefix.lower();light(p,.65,prefix,fixture=ident)
         record(ident,'sconce','Bedroom',pixel,p,[e['name'] for e in api.ELEMENTS if e['name'].startswith(prefix+'_Light')])
     pixel=SCONCES['Study'];x,_=position(pixel);z=5.725;y=1.60
     plate=box('StudySconce_Plate','kitchen_ivory',[x,y,z+.013],[.10,.10,.025])

@@ -15,8 +15,9 @@ def checks(model):
             near(top+.0004,expected)
             if any(s in name for s in ('Hall','Kitchen','Utility')):assert e['material'].startswith('kitchen_floor_')
         if e['category']=='door':assert e['material']=='door_ivory'
-        if name.startswith('KitchenUpper') and '_Handle_' not in name:assert e['material']=='kitchen_ivory'
-        if name.startswith('Furniture_DiningChair'):assert e['material']==('kitchen_seat' if '_seat_' in name else 'kitchen_oak')
+        if name.startswith('KitchenUpper') and '_Handle_' not in name:
+            assert e['material']==('kitchen_ivory' if '_IvoryFacade' in name else 'kitchen_oak')
+        if name.startswith('Furniture_DiningChair'):assert e['material']==('kitchen_seat' if '_SeatCushion' in name else 'kitchen_oak')
         if name.startswith('KitchenSofa'):assert e['material'] in ('kitchen_fabric','kitchen_seat','kitchen_olive','kitchen_oak','kitchen_stitch','kitchen_sofa_sage')
         if name.startswith('BathTallCabinet_001'):near(top,ceiling)
         if e['category']=='ceiling':near(e['position'][1]-e['size'][1]/2,2.8 if e['rawOnly'] else ceiling)

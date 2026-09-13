@@ -1,7 +1,11 @@
 """Requested visual changes preserve shell measurements and all fixture positions."""
 import math
 import generate_model as m
+import finish_review
+finish_review.build=lambda api:None  # Isolate the earlier stage; current full scene has dedicated regression coverage.
 import viewer_refinement as ref
+import model_polish
+model_polish.build=lambda api:None  # Original refinement stage; latest exterior has its own test.
 
 build=ref.build;ref.build=lambda api:None
 m.build_scene();before={e['name']:m.resolved(e) for e in m.ELEMENTS};lights=list(m.SCENE_LIGHTS)
